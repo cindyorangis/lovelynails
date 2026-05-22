@@ -2,7 +2,7 @@ export type ServiceItem = {
   name: string;
   price: string;
   duration: string;
-  pricingType: "From" | "Fixed";
+  pricingType: "From" | "Fixed" | "Complimentary";
   subcategory?: string;
   description?: string;
 };
@@ -314,63 +314,121 @@ export const serviceCategories: ServiceCategory[] = [
     ],
   },
   {
-    title: "Spa & Kids",
+    title: "Spa Treatments",
     items: [
       {
         name: "Facial",
         price: "C$70",
         duration: "60 min",
         pricingType: "From",
-        subcategory: "Spa Treatments",
       },
       {
         name: "Massage Body",
         price: "C$70",
         duration: "60 min",
         pricingType: "From",
-        subcategory: "Spa Treatments",
       },
       {
         name: "Eyelash Tinting",
         price: "C$20",
         duration: "15 min",
         pricingType: "From",
-        subcategory: "Spa Treatments",
       },
+    ],
+  },
+  {
+    title: "Kids Under 12",
+    items: [
       {
         name: "Kid Manicure",
         price: "C$15",
         duration: "15 min",
         pricingType: "Fixed",
-        subcategory: "Kids Under 12",
       },
       {
         name: "Kid Pedicure",
         price: "C$25",
         duration: "30 min",
         pricingType: "Fixed",
-        subcategory: "Kids Under 12",
       },
       {
         name: "Polish Hand (Kid)",
         price: "C$7",
         duration: "15 min",
         pricingType: "Fixed",
-        subcategory: "Kids Under 12",
       },
       {
         name: "Polish Toe (Kid)",
         price: "C$8",
         duration: "15 min",
         pricingType: "Fixed",
-        subcategory: "Kids Under 12",
       },
       {
         name: "Shellac Add On",
         price: "C$10",
         duration: "15 min",
         pricingType: "Fixed",
-        subcategory: "Kids Under 12",
+      },
+    ],
+  },
+  {
+    title: "Bridal & Wedding",
+    items: [
+      {
+        name: "Bridal Nail Consultation",
+        price: "Complimentary",
+        duration: "15 min",
+        pricingType: "Complimentary",
+        subcategory: "Consultation & Trials",
+      },
+      {
+        name: "Bridal Nail Trial (Full Set)",
+        price: "C$75",
+        duration: "90 min",
+        pricingType: "From",
+        subcategory: "Consultation & Trials",
+      },
+      {
+        name: "Luxury Bridal Manicure",
+        price: "C$85",
+        duration: "75 min",
+        pricingType: "From",
+        subcategory: "The Big Day (Bride)",
+      },
+      {
+        name: "Luxury Bridal Pedicure",
+        price: "C$70",
+        duration: "75 min",
+        pricingType: "From",
+        subcategory: "The Big Day (Bride)",
+      },
+      {
+        name: "Deluxe Bridal Bundle (Mani + Pedi)",
+        price: "C$145",
+        duration: "150 min",
+        pricingType: "From",
+        subcategory: "The Big Day (Bride)",
+      },
+      {
+        name: "Bridesmaid Manicure",
+        price: "C$45",
+        duration: "45 min",
+        pricingType: "Fixed",
+        subcategory: "Wedding Party & Guests",
+      },
+      {
+        name: "Mother of the Bride/Groom Mani",
+        price: "C$45",
+        duration: "45 min",
+        pricingType: "Fixed",
+        subcategory: "Wedding Party & Guests",
+      },
+      {
+        name: "Flower Girl Polish (Under 12)",
+        price: "C$12",
+        duration: "20 min",
+        pricingType: "Fixed",
+        subcategory: "Wedding Party & Guests",
       },
     ],
   },

@@ -9,6 +9,9 @@ import {
 } from "../services-data";
 
 function formatPrice(item: ServiceItem) {
+  if (item.pricingType === "Complimentary") {
+    return "Complimentary";
+  }
   return item.pricingType === "From"
     ? `From ${item.price}`
     : `${item.price} (Fixed)`;
@@ -48,12 +51,6 @@ export default function ServicesSelector() {
         return (
           <section key={category.title} className="card service-category">
             <h2>{category.title}</h2>
-
-            <div className="service-table-head">
-              <span>Service Category</span>
-              <span>Price</span>
-              <span>Duration</span>
-            </div>
 
             <div className="service-table-body">
               {Array.from(grouped.entries()).map(([groupName, items]) => (

@@ -295,25 +295,9 @@ h2 {
 .service-category h2 {
   margin-bottom: 0.85rem;
 }
-.service-table-head {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 170px 95px;
-  gap: 0.6rem;
-  padding: 0.2rem 0 0.6rem;
-  border-bottom: 1px solid var(--border);
-  font-size: 0.84rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--muted);
-  font-weight: 700;
-}
-.service-table-head span:nth-child(2),
-.service-table-head span:nth-child(3) {
-  text-align: right;
-}
 .service-table-body {
   display: grid;
-  gap: 0.8rem;
+  gap: 0.7rem;
 }
 .service-group-block {
   display: grid;
@@ -398,9 +382,6 @@ h2 {
   .service-item-row {
     grid-template-columns: 1fr;
     align-items: flex-start;
-  }
-  .service-table-head {
-    display: none;
   }
   .service-meta {
     text-align: left;
