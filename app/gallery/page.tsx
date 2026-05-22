@@ -1,26 +1,24 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { buildTitle, localDescription } from "../site-data";
-import { galleryItems } from "./gallery-data";
+import { galleryCategories, galleryItems } from "./gallery-data";
 
 export const metadata: Metadata = {
   title: buildTitle("Nail Art Gallery"),
   description: localDescription("Gallery of manicure and pedicure work"),
 };
 
-const categories = ["Nail Art", "Gel", "Classic", "Pedicure"] as const;
-
 export default function GalleryPage() {
   return (
     <div className="container page-stack">
       <h1>Gallery</h1>
       <p>
-        Real styles and finishes our North York clients love. Browse ideas
-        before your next booking.
+        Real styles and finishes from our recent work in North York. Browse
+        ideas before your next booking.
       </p>
 
       <div className="gallery-filters" aria-label="Gallery categories">
-        {categories.map((category) => (
+        {galleryCategories.map((category) => (
           <span key={category} className="gallery-chip">
             {category}
           </span>
