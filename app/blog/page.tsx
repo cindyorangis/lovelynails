@@ -11,7 +11,10 @@ export default function BlogIndexPage() {
   return (
     <div className="container page-stack">
       <h1>Blog</h1>
-      <p>Nail care tips, seasonal style ideas, and beauty guidance from our North York team.</p>
+      <p>
+        Nail care tips, seasonal style ideas, and beauty guidance from our North
+        York team.
+      </p>
       <div className="list-wrap">
         {blogPosts.map((post) => (
           <article key={post.slug} className="list-item">

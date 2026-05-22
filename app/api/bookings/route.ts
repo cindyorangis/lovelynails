@@ -9,7 +9,10 @@ export async function POST(request: Request) {
   const body = await request.json().catch(() => null);
 
   if (!body) {
-    return NextResponse.json({ error: "Invalid request body." }, { status: 400 });
+    return NextResponse.json(
+      { error: "Invalid request body." },
+      { status: 400 },
+    );
   }
 
   const parsed = validateBookingPayload({
@@ -29,12 +32,14 @@ export async function POST(request: Request) {
   if (!supabaseUrl || !serviceRoleKey) {
     return NextResponse.json(
       { error: "Server is missing Supabase environment variables." },
-      { status: 500 }
+      { status: 500 },
     );
   }
 
   const appointmentDate = new Date(`${parsed.value.date}T12:00:00-04:00`);
-  const reminderAt = new Date(appointmentDate.getTime() - 24 * 60 * 60 * 1000).toISOString();
+  const reminderAt = new Date(
+    appointmentDate.getTime() - 24 * 60 * 60 * 1000,
+  ).toISOString();
 
   const insertPayload = {
     customer_name: parsed.value.name,
@@ -62,7 +67,7 @@ export async function POST(request: Request) {
     const errorText = await response.text();
     return NextResponse.json(
       { error: "Could not save booking.", details: errorText },
-      { status: 500 }
+      { status: 500 },
     );
   }
 

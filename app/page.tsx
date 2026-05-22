@@ -35,22 +35,42 @@ export default function HomePage() {
         <p className="eyebrow">North York Nail Salon</p>
         <h1>Lovely Nails in North York, Ontario</h1>
         <p>
-          Expert manicures, pedicures, and custom nail art with a strong focus on hygiene,
-          comfort, and long-lasting results.
+          Expert manicures, pedicures, and custom nail art with a strong focus
+          on hygiene, comfort, and long-lasting results.
         </p>
         <div className="cta-row">
-          <Link href="/booking" className="btn btn-primary">Book Appointment</Link>
-          <Link href="/services" className="btn btn-secondary">View Services</Link>
+          <Link href="/booking" className="btn btn-primary">
+            Book Appointment
+          </Link>
+          <Link href="/services" className="btn btn-secondary">
+            View Services
+          </Link>
         </div>
       </section>
 
       <section className="card-grid">
-        <article className="card"><h2>Services</h2><p>Gel, shellac, classic manicures, spa pedicures, and nail art.</p></article>
-        <article className="card"><h2>Location</h2><p>Conveniently located in North York with easy TTC access.</p></article>
-        <article className="card"><h2>Clean Standards</h2><p>Sanitized tools, fresh liners, and detail-focused care every visit.</p></article>
+        <article className="card">
+          <h2>Services</h2>
+          <p>Gel, shellac, classic manicures, spa pedicures, and nail art.</p>
+        </article>
+        <article className="card">
+          <h2>Location</h2>
+          <p>Conveniently located in North York with easy TTC access.</p>
+        </article>
+        <article className="card">
+          <h2>Clean Standards</h2>
+          <p>
+            Sanitized tools, fresh liners, and detail-focused care every visit.
+          </p>
+        </article>
       </section>
 
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(localBusinessSchema),
+        }}
+      />
     </div>
   );
 }

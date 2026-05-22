@@ -52,13 +52,18 @@ export default function RootLayout({
           <div className="container footer-grid">
             <div>
               <h2>Lovely Nails</h2>
-              <p>Nail salon in North York, Ontario focused on clean care and beautiful results.</p>
+              <p>
+                Nail salon in North York, Ontario focused on clean care and
+                beautiful results.
+              </p>
             </div>
             <div>
               <h2>Visit Us</h2>
               <p>
-                {siteConfig.address.streetAddress}, {siteConfig.address.addressLocality}, {" "}
-                {siteConfig.address.addressRegion} {siteConfig.address.postalCode}
+                {siteConfig.address.streetAddress},{" "}
+                {siteConfig.address.addressLocality},{" "}
+                {siteConfig.address.addressRegion}{" "}
+                {siteConfig.address.postalCode}
               </p>
             </div>
             <div>

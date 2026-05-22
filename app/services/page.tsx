@@ -18,7 +18,10 @@ export default function ServicesPage() {
   return (
     <div className="container page-stack">
       <h1>Services</h1>
-      <p>Professional nail services for clients in North York and surrounding Toronto neighborhoods.</p>
+      <p>
+        Professional nail services for clients in North York and surrounding
+        Toronto neighborhoods.
+      </p>
       <div className="list-wrap">
         {services.map((service) => (
           <article key={service.name} className="list-item">

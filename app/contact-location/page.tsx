@@ -10,12 +10,18 @@ export default function ContactLocationPage() {
   return (
     <div className="container page-stack">
       <h1>Contact & Location</h1>
-      <p>Find Lovely Nails in North York, Ontario and reach us quickly for appointments.</p>
+      <p>
+        Find Lovely Nails in North York, Ontario and reach us quickly for
+        appointments.
+      </p>
       <div className="card-grid">
         <article className="card">
           <h2>Address</h2>
           <p>{siteConfig.address.streetAddress}</p>
-          <p>{siteConfig.address.addressLocality}, {siteConfig.address.addressRegion} {siteConfig.address.postalCode}</p>
+          <p>
+            {siteConfig.address.addressLocality},{" "}
+            {siteConfig.address.addressRegion} {siteConfig.address.postalCode}
+          </p>
         </article>
         <article className="card">
           <h2>Phone</h2>
