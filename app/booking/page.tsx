@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import BookingForm from "./components/booking-form";
 import { buildTitle, localDescription, siteConfig } from "../site-data";
 
 export const metadata: Metadata = {
@@ -16,25 +17,7 @@ export default function BookingPage() {
         <p>{siteConfig.phone}</p>
         <p>Walk-ins welcome based on availability. For evenings and weekends, we recommend pre-booking.</p>
       </div>
-      <form className="booking-form" aria-label="Appointment request form">
-        <label>
-          Full Name
-          <input type="text" name="name" placeholder="Your name" />
-        </label>
-        <label>
-          Phone Number
-          <input type="tel" name="phone" placeholder="(416) 555-0188" />
-        </label>
-        <label>
-          Service
-          <input type="text" name="service" placeholder="Gel manicure" />
-        </label>
-        <label>
-          Preferred Date
-          <input type="date" name="date" />
-        </label>
-        <button type="submit" className="btn btn-primary">Request Appointment</button>
-      </form>
+      <BookingForm />
     </div>
   );
 }
