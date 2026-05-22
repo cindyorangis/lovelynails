@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { activePromotions } from "../../site-data";
 import {
   buildServiceValue,
@@ -27,6 +27,39 @@ const initialState: FormState = {
   couponCode: "",
 };
 
+// Business hours per day of week (0 = Sunday)
+const BUSINESS_HOURS: Record<number, { open: string; close: string } | null> = {
+  0: { open: "10:00", close: "17:00" }, // Sunday
+  1: { open: "09:30", close: "19:30" }, // Monday
+  2: { open: "09:30", close: "19:30" }, // Tuesday
+  3: { open: "09:30", close: "19:30" }, // Wednesday
+  4: { open: "09:30", close: "19:30" }, // Thursday
+  5: { open: "09:30", close: "19:30" }, // Friday
+  6: { open: "09:30", close: "18:30" }, // Saturday
+};
+
+function generateTimeSlots(open: string, close: string): string[] {
+  const slots: string[] = [];
+  const [openH, openM] = open.split(":").map(Number);
+  const [closeH, closeM] = close.split(":").map(Number);
+  const openMinutes = openH * 60 + openM;
+  const closeMinutes = closeH * 60 + closeM;
+
+  for (let m = openMinutes; m < closeMinutes; m += 15) {
+    const h = Math.floor(m / 60);
+    const min = m % 60;
+    const label = new Date(0, 0, 0, h, min).toLocaleTimeString("en-CA", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
+    const value = `${String(h).padStart(2, "0")}:${String(min).padStart(2, "0")}`;
+    slots.push(value + "|" + label);
+  }
+
+  return slots;
+}
+
 type BookingFormProps = {
   initialServices?: string[];
 };
@@ -43,6 +76,20 @@ export default function BookingForm({
     type: "ok" | "error";
     message: string;
   } | null>(null);
+
+  // Derive available time slots from selected date
+  const timeSlots = useMemo(() => {
+    if (!form.date) return [];
+    // Parse as local date (YYYY-MM-DD) without timezone shift
+    const [y, mo, d] = form.date.split("-").map(Number);
+    const dayOfWeek = new Date(y, mo - 1, d).getDay();
+    const hours = BUSINESS_HOURS[dayOfWeek];
+    if (!hours) return [];
+    return generateTimeSlots(hours.open, hours.close);
+  }, [form.date]);
+
+  // Minimum selectable date = today
+  const today = new Date().toISOString().split("T")[0];
 
   function toggleService(value: string) {
     setForm((prev) => ({
@@ -133,6 +180,54 @@ export default function BookingForm({
         />
       </label>
 
+      {/* Date + Time grouped together, before the long services list */}
+      <label>
+        Preferred Date
+        <input
+          type="date"
+          name="date"
+          value={form.date}
+          min={today}
+          onChange={(event) =>
+            setForm((prev) => ({
+              ...prev,
+              date: event.target.value,
+              time: "", // reset time when date changes
+            }))
+          }
+          required
+        />
+      </label>
+
+      <label>
+        Preferred Time
+        <select
+          name="time"
+          value={form.time}
+          onChange={(event) =>
+            setForm((prev) => ({ ...prev, time: event.target.value }))
+          }
+          required
+          disabled={timeSlots.length === 0}
+        >
+          <option value="">
+            {form.date
+              ? timeSlots.length === 0
+                ? "Closed that day"
+                : "Select a time"
+              : "Pick a date first"}
+          </option>
+          {timeSlots.map((slot) => {
+            const [value, label] = slot.split("|");
+            return (
+              <option key={value} value={value}>
+                {label}
+              </option>
+            );
+          })}
+        </select>
+      </label>
+
       <section
         className="card booking-service-select"
         aria-label="Select one or more services"
@@ -169,31 +264,6 @@ export default function BookingForm({
           ))}
         </div>
       </section>
-
-      <label>
-        Preferred Date
-        <input
-          type="date"
-          name="date"
-          value={form.date}
-          onChange={(event) =>
-            setForm((prev) => ({ ...prev, date: event.target.value }))
-          }
-          required
-        />
-      </label>
-      <label>
-        Preferred Time
-        <input
-          type="time"
-          name="time"
-          value={form.time}
-          onChange={(event) =>
-            setForm((prev) => ({ ...prev, time: event.target.value }))
-          }
-          required
-        />
-      </label>
 
       <label>
         Coupon Code
