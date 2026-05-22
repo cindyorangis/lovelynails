@@ -1,13 +1,13 @@
 export const siteConfig = {
   name: "Lovely Nails",
-  baseUrl: "https://www.lovelynailsnorthyork.ca",
-  phone: "+1-416-555-0188",
-  email: "hello@lovelynailsnorthyork.ca",
+  baseUrl: "https://www.lovelynailsnorthyork.com",
+  phone: "+1-416-743-1567",
+  email: "hello@lovelynailsnorthyork.com",
   address: {
-    streetAddress: "1234 Yonge Street",
+    streetAddress: "2938 Islington Ave.",
     addressLocality: "North York",
     addressRegion: "ON",
-    postalCode: "M2N 5X2",
+    postalCode: "M9L 2K5",
     addressCountry: "CA",
   },
   geo: {
@@ -15,13 +15,13 @@ export const siteConfig = {
     longitude: -79.4111,
   },
   hours: [
-    "Monday: 10:00 AM - 7:00 PM",
-    "Tuesday: 10:00 AM - 7:00 PM",
-    "Wednesday: 10:00 AM - 7:00 PM",
-    "Thursday: 10:00 AM - 8:00 PM",
-    "Friday: 10:00 AM - 8:00 PM",
-    "Saturday: 9:00 AM - 6:00 PM",
     "Sunday: 10:00 AM - 5:00 PM",
+    "Monday: 9:30 AM - 7:30 PM",
+    "Tuesday: 9:30 AM - 7:30 PM",
+    "Wednesday: 9:30 AM - 7:30 PM",
+    "Thursday: 9:30 AM - 7:30 PM",
+    "Friday: 9:30 AM - 7:30 PM",
+    "Saturday: 9:30 AM - 6:30 PM",
   ],
 };
 
