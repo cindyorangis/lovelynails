@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import BookingForm from "./components/booking-form";
-import PromoBanner from "../components/promo-banner";
 import { buildTitle, localDescription, siteConfig } from "../site-data";
 
 export const metadata: Metadata = {
@@ -24,7 +23,6 @@ export default function BookingPage() {
           recommend pre-booking.
         </p>
       </div>
-      <PromoBanner />
       <BookingForm />
     </div>
   );

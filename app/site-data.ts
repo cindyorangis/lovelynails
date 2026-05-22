@@ -40,7 +40,7 @@ export const promotion = {
   label: "Limited-Time Offer",
   headline: "20% off Monday to Wednesday before 3 PM",
   details: "Valid on gel manicure + spa pedicure combo. Ends June 30, 2026.",
-  ctaLabel: "Claim This Offer",
+  ctaLabel: "Book With Offer",
   ctaHref: "/booking",
 };
 

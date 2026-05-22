@@ -1,36 +1,46 @@
-import type { Metadata } from "next";
-import PromoBanner from "../components/promo-banner";
+﻿import type { Metadata } from "next";
 import { buildTitle, localDescription } from "../site-data";
+import { serviceCategories } from "./services-data";
 
 export const metadata: Metadata = {
   title: buildTitle("Nail Services"),
-  description: localDescription("Manicure, pedicure, and nail art services"),
+  description: localDescription(
+    "Manicure, pedicure, waxing, and nail art services",
+  ),
 };
-
-const services = [
-  { name: "Classic Manicure", time: "35 min", price: "$35+" },
-  { name: "Gel Manicure", time: "50 min", price: "$50+" },
-  { name: "Spa Pedicure", time: "55 min", price: "$60+" },
-  { name: "Nail Art Add-On", time: "15 min", price: "$10+" },
-  { name: "Acrylic Full Set", time: "75 min", price: "$75+" },
-];
 
 export default function ServicesPage() {
   return (
     <div className="container page-stack">
       <h1>Services</h1>
       <p>
-        Professional nail services for clients in North York and surrounding
-        Toronto neighborhoods.
+        Browse our full service menu for Lovely Nails in North York. Prices are
+        listed in CAD.
       </p>
-      <PromoBanner />
-      <div className="list-wrap">
-        {services.map((service) => (
-          <article key={service.name} className="list-item">
-            <h2>{service.name}</h2>
-            <p>{service.time}</p>
-            <p>{service.price}</p>
-          </article>
+
+      <div className="services-category-list">
+        {serviceCategories.map((category) => (
+          <section key={category.title} className="card service-category">
+            <h2>{category.title}</h2>
+            <div className="service-items">
+              {category.items.map((item) => (
+                <article
+                  key={`${category.title}-${item.name}`}
+                  className="service-item-row"
+                >
+                  <div>
+                    <h3>{item.name}</h3>
+                    {item.description ? (
+                      <p className="service-desc">{item.description}</p>
+                    ) : null}
+                  </div>
+                  <p className="service-meta">
+                    {item.price} | {item.duration} | {item.pricingType}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </section>
         ))}
       </div>
     </div>

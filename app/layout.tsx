@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import PromoBanner from "./components/promo-banner";
 import "./globals.css";
 import { mainNav, siteConfig } from "./site-data";
 
@@ -46,9 +45,6 @@ export default function RootLayout({
                 </Link>
               ))}
             </nav>
-          </div>
-          <div className="container promo-shell">
-            <PromoBanner compact />
           </div>
         </header>
         <main>{children}</main>

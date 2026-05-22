@@ -1,7 +1,8 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { promotion } from "../../site-data";
+import { bookingServiceOptions } from "../../services/services-data";
 
 type FormState = {
   name: string;
@@ -112,16 +113,21 @@ export default function BookingForm() {
       </label>
       <label>
         Service
-        <input
-          type="text"
+        <select
           name="service"
-          placeholder="Gel manicure"
           value={form.service}
           onChange={(event) =>
             setForm((prev) => ({ ...prev, service: event.target.value }))
           }
           required
-        />
+        >
+          <option value="">Select a service</option>
+          {bookingServiceOptions.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
       </label>
       <label>
         Preferred Date
@@ -161,7 +167,7 @@ export default function BookingForm() {
             }
           />
           <span>
-            Claim offer: <strong>{promotion.headline}</strong>
+            Apply current offer: <strong>{promotion.headline}</strong>
           </span>
         </label>
       ) : null}
