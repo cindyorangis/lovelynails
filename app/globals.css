@@ -169,6 +169,21 @@ h2 {
   display: grid;
   gap: 0.7rem;
 }
+.map-card {
+  display: grid;
+  gap: 0.8rem;
+}
+.map-frame-wrap {
+  border-radius: 0.8rem;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.map-frame-wrap iframe {
+  width: 100%;
+  min-height: 360px;
+  border: 0;
+  display: block;
+}
 .booking-form {
   display: grid;
   gap: 0.8rem;
