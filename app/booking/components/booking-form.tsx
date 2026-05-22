@@ -1,19 +1,26 @@
 "use client";
 
 import { useState } from "react";
+import { promotion } from "../../site-data";
 
 type FormState = {
   name: string;
   phone: string;
+  email: string;
   service: string;
   date: string;
+  time: string;
+  claimedOffer: boolean;
 };
 
 const initialState: FormState = {
   name: "",
   phone: "",
+  email: "",
   service: "",
   date: "",
+  time: "",
+  claimedOffer: promotion.isActive,
 };
 
 export default function BookingForm() {
@@ -91,6 +98,19 @@ export default function BookingForm() {
         />
       </label>
       <label>
+        Email Address
+        <input
+          type="email"
+          name="email"
+          placeholder="you@example.com"
+          value={form.email}
+          onChange={(event) =>
+            setForm((prev) => ({ ...prev, email: event.target.value }))
+          }
+          required
+        />
+      </label>
+      <label>
         Service
         <input
           type="text"
@@ -115,6 +135,36 @@ export default function BookingForm() {
           required
         />
       </label>
+      <label>
+        Preferred Time
+        <input
+          type="time"
+          name="time"
+          value={form.time}
+          onChange={(event) =>
+            setForm((prev) => ({ ...prev, time: event.target.value }))
+          }
+          required
+        />
+      </label>
+      {promotion.isActive ? (
+        <label className="booking-checkbox">
+          <input
+            type="checkbox"
+            name="claimedOffer"
+            checked={form.claimedOffer}
+            onChange={(event) =>
+              setForm((prev) => ({
+                ...prev,
+                claimedOffer: event.target.checked,
+              }))
+            }
+          />
+          <span>
+            Claim offer: <strong>{promotion.headline}</strong>
+          </span>
+        </label>
+      ) : null}
       <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
         {isSubmitting ? "Submitting..." : "Request Appointment"}
       </button>

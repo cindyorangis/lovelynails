@@ -236,6 +236,16 @@ h2 {
   padding: 0.65rem;
   font: inherit;
 }
+.booking-checkbox {
+  display: flex !important;
+  align-items: center;
+  gap: 0.55rem;
+  font-weight: 500 !important;
+}
+.booking-checkbox input {
+  width: auto;
+  margin: 0;
+}
 .site-footer {
   border-top: 1px solid var(--border);
   background: #fff;

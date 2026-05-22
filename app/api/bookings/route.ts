@@ -5,6 +5,56 @@ type SupabaseInsertResponse = {
   id?: string;
 };
 
+async function sendConfirmationEmail(params: {
+  toEmail: string;
+  customerName: string;
+  service: string;
+  date: string;
+  time: string;
+  claimedOffer: boolean;
+}) {
+  const resendApiKey = process.env.RESEND_API_KEY;
+  const fromEmail = process.env.BOOKING_FROM_EMAIL;
+
+  if (!resendApiKey || !fromEmail) {
+    return;
+  }
+
+  const subject = `Lovely Nails booking confirmation - ${params.date} at ${params.time}`;
+  const offerLine = params.claimedOffer
+    ? "Offer claimed: Yes (we will confirm eligibility when we call you)."
+    : "Offer claimed: No";
+  const html = `
+    <div style="font-family:Arial,Helvetica,sans-serif;line-height:1.5;">
+      <h2>Thanks for booking with Lovely Nails</h2>
+      <p>Hi ${params.customerName}, your request has been received.</p>
+      <p><strong>Service:</strong> ${params.service}</p>
+      <p><strong>Date:</strong> ${params.date}</p>
+      <p><strong>Time:</strong> ${params.time}</p>
+      <p><strong>${offerLine}</strong></p>
+      <p>We will contact you shortly to confirm your appointment details.</p>
+    </div>
+  `;
+
+  try {
+    await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${resendApiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: fromEmail,
+        to: [params.toEmail],
+        subject,
+        html,
+      }),
+    });
+  } catch {
+    // Keep booking flow successful even if email provider has a temporary issue.
+  }
+}
+
 export async function POST(request: Request) {
   const body = await request.json().catch(() => null);
 
@@ -18,8 +68,11 @@ export async function POST(request: Request) {
   const parsed = validateBookingPayload({
     name: body.name ?? "",
     phone: body.phone ?? "",
+    email: body.email ?? "",
     service: body.service ?? "",
     date: body.date ?? "",
+    time: body.time ?? "",
+    claimedOffer: body.claimedOffer ?? false,
   });
 
   if (!parsed.ok) {
@@ -44,8 +97,11 @@ export async function POST(request: Request) {
   const insertPayload = {
     customer_name: parsed.value.name,
     customer_phone: parsed.value.phone,
+    customer_email: parsed.value.email,
     requested_service: parsed.value.service,
     requested_date: parsed.value.date,
+    requested_time: parsed.value.time,
+    claimed_offer: parsed.value.claimedOffer,
     status: "new",
     sms_opt_in: true,
     reminder_status: "pending",
@@ -72,6 +128,15 @@ export async function POST(request: Request) {
   }
 
   const inserted = (await response.json()) as SupabaseInsertResponse[];
+
+  await sendConfirmationEmail({
+    toEmail: parsed.value.email,
+    customerName: parsed.value.name,
+    service: parsed.value.service,
+    date: parsed.value.date,
+    time: parsed.value.time,
+    claimedOffer: parsed.value.claimedOffer,
+  });
 
   return NextResponse.json({
     ok: true,
