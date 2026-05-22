@@ -7,7 +7,15 @@ export const metadata: Metadata = {
   description: localDescription("Online nail appointment booking"),
 };
 
-export default function BookingPage() {
+export default async function BookingPage(props: PageProps<"/booking">) {
+  const searchParams = await props.searchParams;
+  const selectedServicesRaw = searchParams.services;
+  const selectedServices = Array.isArray(selectedServicesRaw)
+    ? selectedServicesRaw
+    : selectedServicesRaw
+      ? [selectedServicesRaw]
+      : [];
+
   return (
     <div className="container page-stack">
       <h1>Booking</h1>
@@ -23,7 +31,7 @@ export default function BookingPage() {
           recommend pre-booking.
         </p>
       </div>
-      <BookingForm />
+      <BookingForm initialServices={selectedServices} />
     </div>
   );
 }

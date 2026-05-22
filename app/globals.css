@@ -225,6 +225,9 @@ h2 {
   gap: 0.8rem;
   max-width: 460px;
 }
+.booking-form-wide {
+  max-width: 100%;
+}
 .booking-form label {
   display: grid;
   gap: 0.4rem;
@@ -242,6 +245,11 @@ h2 {
   padding: 0.65rem;
   font: inherit;
   background: #fff;
+}
+.muted-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.88rem;
 }
 .booking-checkbox {
   display: flex !important;
@@ -269,6 +277,16 @@ h2 {
 .services-category-list {
   display: grid;
   gap: 1rem;
+}
+.service-check {
+  display: flex !important;
+  align-items: center;
+  gap: 0.55rem;
+  font-weight: 500 !important;
+}
+.service-check input {
+  width: auto;
+  margin: 0;
 }
 .service-category h2 {
   margin-bottom: 0.85rem;
@@ -300,6 +318,44 @@ h2 {
   color: #664857;
   max-width: 64ch;
 }
+.service-item-select-row {
+  align-items: center;
+}
+.service-select-label {
+  display: flex !important;
+  align-items: flex-start;
+  gap: 0.55rem;
+  font-weight: 500 !important;
+}
+.service-select-label input {
+  width: auto;
+  margin-top: 0.2rem;
+}
+.service-select-label span {
+  display: grid;
+}
+.service-select-footer {
+  position: sticky;
+  bottom: 0.6rem;
+  display: flex;
+  justify-content: flex-end;
+}
+.booking-service-select {
+  display: grid;
+  gap: 0.8rem;
+}
+.booking-service-groups {
+  display: grid;
+  gap: 0.9rem;
+}
+.booking-service-group h3 {
+  margin: 0 0 0.4rem;
+  font-size: 0.98rem;
+}
+.booking-service-items {
+  display: grid;
+  gap: 0.4rem;
+}
 @media (max-width: 640px) {
   .nav-wrap {
     align-items: start;
@@ -315,5 +371,12 @@ h2 {
   .service-meta {
     text-align: left;
     white-space: normal;
+  }
+  .service-select-footer {
+    justify-content: stretch;
+  }
+  .service-select-footer .btn {
+    width: 100%;
+    text-align: center;
   }
 }

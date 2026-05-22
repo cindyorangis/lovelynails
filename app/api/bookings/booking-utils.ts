@@ -2,7 +2,7 @@ export type BookingPayload = {
   name: string;
   phone: string;
   email: string;
-  service: string;
+  services: string[];
   date: string;
   time: string;
   claimedOffer: boolean;
@@ -16,12 +16,14 @@ export function validateBookingPayload(input: BookingPayload) {
   const name = sanitize(input.name);
   const phone = sanitize(input.phone);
   const email = sanitize(input.email).toLowerCase();
-  const service = sanitize(input.service);
+  const services = Array.isArray(input.services)
+    ? input.services.map((service) => sanitize(service)).filter(Boolean)
+    : [];
   const date = input.date;
   const time = input.time;
   const claimedOffer = Boolean(input.claimedOffer);
 
-  if (!name || !phone || !email || !service || !date || !time) {
+  if (!name || !phone || !email || services.length === 0 || !date || !time) {
     return { ok: false as const, error: "Please fill out all fields." };
   }
 
@@ -47,6 +49,6 @@ export function validateBookingPayload(input: BookingPayload) {
 
   return {
     ok: true as const,
-    value: { name, phone, email, service, date, time, claimedOffer },
+    value: { name, phone, email, services, date, time, claimedOffer },
   };
 }

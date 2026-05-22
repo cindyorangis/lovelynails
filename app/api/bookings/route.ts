@@ -8,7 +8,7 @@ type SupabaseInsertResponse = {
 async function sendConfirmationEmail(params: {
   toEmail: string;
   customerName: string;
-  service: string;
+  services: string[];
   date: string;
   time: string;
   claimedOffer: boolean;
@@ -24,11 +24,15 @@ async function sendConfirmationEmail(params: {
   const offerLine = params.claimedOffer
     ? "Offer claimed: Yes (we will confirm eligibility when we call you)."
     : "Offer claimed: No";
+  const serviceLines = params.services
+    .map((service) => `<li>${service}</li>`)
+    .join("");
   const html = `
     <div style="font-family:Arial,Helvetica,sans-serif;line-height:1.5;">
       <h2>Thanks for booking with Lovely Nails</h2>
       <p>Hi ${params.customerName}, your request has been received.</p>
-      <p><strong>Service:</strong> ${params.service}</p>
+      <p><strong>Services:</strong></p>
+      <ul>${serviceLines}</ul>
       <p><strong>Date:</strong> ${params.date}</p>
       <p><strong>Time:</strong> ${params.time}</p>
       <p><strong>${offerLine}</strong></p>
@@ -69,7 +73,7 @@ export async function POST(request: Request) {
     name: body.name ?? "",
     phone: body.phone ?? "",
     email: body.email ?? "",
-    service: body.service ?? "",
+    services: body.services ?? [],
     date: body.date ?? "",
     time: body.time ?? "",
     claimedOffer: body.claimedOffer ?? false,
@@ -98,7 +102,7 @@ export async function POST(request: Request) {
     customer_name: parsed.value.name,
     customer_phone: parsed.value.phone,
     customer_email: parsed.value.email,
-    requested_service: parsed.value.service,
+    requested_service: parsed.value.services.join(", "),
     requested_date: parsed.value.date,
     requested_time: parsed.value.time,
     claimed_offer: parsed.value.claimedOffer,
@@ -132,7 +136,7 @@ export async function POST(request: Request) {
   await sendConfirmationEmail({
     toEmail: parsed.value.email,
     customerName: parsed.value.name,
-    service: parsed.value.service,
+    services: parsed.value.services,
     date: parsed.value.date,
     time: parsed.value.time,
     claimedOffer: parsed.value.claimedOffer,

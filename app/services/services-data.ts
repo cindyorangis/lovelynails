@@ -11,6 +11,10 @@ export type ServiceCategory = {
   items: ServiceItem[];
 };
 
+export function buildServiceValue(categoryTitle: string, serviceName: string) {
+  return `${categoryTitle} - ${serviceName}`;
+}
+
 export const serviceCategories: ServiceCategory[] = [
   {
     title: "Artificial Nail",
@@ -337,7 +341,7 @@ export const serviceCategories: ServiceCategory[] = [
 export const bookingServiceOptions = serviceCategories.flatMap((category) =>
   category.items.map((item) => ({
     label: `${item.name} (${item.price})`,
-    value: `${category.title} - ${item.name}`,
+    value: buildServiceValue(category.title, item.name),
     category: category.title,
   })),
 );

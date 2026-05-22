@@ -1,14 +1,17 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import { promotion } from "../../site-data";
-import { bookingServiceOptions } from "../../services/services-data";
+import {
+  buildServiceValue,
+  serviceCategories,
+} from "../../services/services-data";
 
 type FormState = {
   name: string;
   phone: string;
   email: string;
-  service: string;
+  services: string[];
   date: string;
   time: string;
   claimedOffer: boolean;
@@ -18,19 +21,37 @@ const initialState: FormState = {
   name: "",
   phone: "",
   email: "",
-  service: "",
+  services: [],
   date: "",
   time: "",
   claimedOffer: promotion.isActive,
 };
 
-export default function BookingForm() {
-  const [form, setForm] = useState<FormState>(initialState);
+type BookingFormProps = {
+  initialServices?: string[];
+};
+
+export default function BookingForm({
+  initialServices = [],
+}: BookingFormProps) {
+  const [form, setForm] = useState<FormState>({
+    ...initialState,
+    services: initialServices,
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [result, setResult] = useState<{
     type: "ok" | "error";
     message: string;
   } | null>(null);
+
+  function toggleService(value: string) {
+    setForm((prev) => ({
+      ...prev,
+      services: prev.services.includes(value)
+        ? prev.services.filter((item) => item !== value)
+        : [...prev.services, value],
+    }));
+  }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -68,7 +89,7 @@ export default function BookingForm() {
 
   return (
     <form
-      className="booking-form"
+      className="booking-form booking-form-wide"
       aria-label="Appointment request form"
       onSubmit={handleSubmit}
     >
@@ -111,24 +132,44 @@ export default function BookingForm() {
           required
         />
       </label>
-      <label>
-        Service
-        <select
-          name="service"
-          value={form.service}
-          onChange={(event) =>
-            setForm((prev) => ({ ...prev, service: event.target.value }))
-          }
-          required
-        >
-          <option value="">Select a service</option>
-          {bookingServiceOptions.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
+
+      <section
+        className="card booking-service-select"
+        aria-label="Select one or more services"
+      >
+        <h2>Select Services</h2>
+        <p className="muted-note">
+          Tap all services you want for this appointment.
+        </p>
+
+        <div className="booking-service-groups">
+          {serviceCategories.map((category) => (
+            <div key={category.title} className="booking-service-group">
+              <h3>{category.title}</h3>
+              <div className="booking-service-items">
+                {category.items.map((item) => {
+                  const value = buildServiceValue(category.title, item.name);
+                  const checked = form.services.includes(value);
+
+                  return (
+                    <label key={value} className="service-check">
+                      <input
+                        type="checkbox"
+                        checked={checked}
+                        onChange={() => toggleService(value)}
+                      />
+                      <span>
+                        {item.name} ({item.price})
+                      </span>
+                    </label>
+                  );
+                })}
+              </div>
+            </div>
           ))}
-        </select>
-      </label>
+        </div>
+      </section>
+
       <label>
         Preferred Date
         <input
