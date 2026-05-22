@@ -11,7 +11,7 @@ async function sendConfirmationEmail(params: {
   services: string[];
   date: string;
   time: string;
-  claimedOffer: boolean;
+  couponCode?: string;
 }) {
   const resendApiKey = process.env.RESEND_API_KEY;
   const fromEmail = process.env.BOOKING_FROM_EMAIL;
@@ -21,9 +21,9 @@ async function sendConfirmationEmail(params: {
   }
 
   const subject = `Lovely Nails booking confirmation - ${params.date} at ${params.time}`;
-  const offerLine = params.claimedOffer
-    ? "Offer claimed: Yes (we will confirm eligibility when we call you)."
-    : "Offer claimed: No";
+  const couponLine = params.couponCode
+    ? `Coupon code applied: ${params.couponCode}`
+    : "Coupon code applied: None";
   const serviceLines = params.services
     .map((service) => `<li>${service}</li>`)
     .join("");
@@ -35,7 +35,7 @@ async function sendConfirmationEmail(params: {
       <ul>${serviceLines}</ul>
       <p><strong>Date:</strong> ${params.date}</p>
       <p><strong>Time:</strong> ${params.time}</p>
-      <p><strong>${offerLine}</strong></p>
+      <p><strong>${couponLine}</strong></p>
       <p>We will contact you shortly to confirm your appointment details.</p>
     </div>
   `;
@@ -76,7 +76,7 @@ export async function POST(request: Request) {
     services: body.services ?? [],
     date: body.date ?? "",
     time: body.time ?? "",
-    claimedOffer: body.claimedOffer ?? false,
+    couponCode: body.couponCode ?? "",
   });
 
   if (!parsed.ok) {
@@ -105,7 +105,7 @@ export async function POST(request: Request) {
     requested_service: parsed.value.services.join(", "),
     requested_date: parsed.value.date,
     requested_time: parsed.value.time,
-    claimed_offer: parsed.value.claimedOffer,
+    claimed_offer: Boolean(parsed.value.couponCode),
     status: "new",
     sms_opt_in: true,
     reminder_status: "pending",
@@ -139,7 +139,7 @@ export async function POST(request: Request) {
     services: parsed.value.services,
     date: parsed.value.date,
     time: parsed.value.time,
-    claimedOffer: parsed.value.claimedOffer,
+    couponCode: parsed.value.couponCode,
   });
 
   return NextResponse.json({

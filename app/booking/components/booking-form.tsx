@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { promotion } from "../../site-data";
+import { activePromotions } from "../../site-data";
 import {
   buildServiceValue,
   serviceCategories,
@@ -14,7 +14,7 @@ type FormState = {
   services: string[];
   date: string;
   time: string;
-  claimedOffer: boolean;
+  couponCode: string;
 };
 
 const initialState: FormState = {
@@ -24,7 +24,7 @@ const initialState: FormState = {
   services: [],
   date: "",
   time: "",
-  claimedOffer: promotion.isActive,
+  couponCode: "",
 };
 
 type BookingFormProps = {
@@ -194,24 +194,34 @@ export default function BookingForm({
           required
         />
       </label>
-      {promotion.isActive ? (
-        <label className="booking-checkbox">
-          <input
-            type="checkbox"
-            name="claimedOffer"
-            checked={form.claimedOffer}
-            onChange={(event) =>
-              setForm((prev) => ({
-                ...prev,
-                claimedOffer: event.target.checked,
-              }))
-            }
-          />
-          <span>
-            Apply current offer: <strong>{promotion.headline}</strong>
-          </span>
-        </label>
+
+      <label>
+        Coupon Code
+        <input
+          type="text"
+          name="couponCode"
+          placeholder="Enter coupon code"
+          value={form.couponCode}
+          onChange={(event) =>
+            setForm((prev) => ({
+              ...prev,
+              couponCode: event.target.value.toUpperCase().trim(),
+            }))
+          }
+        />
+      </label>
+
+      {activePromotions.length > 0 ? (
+        <div className="card promo-code-list">
+          <h2>Available Promo Codes</h2>
+          {activePromotions.map((promo) => (
+            <p key={promo.id}>
+              <strong>{promo.couponCode}</strong> - {promo.headline}
+            </p>
+          ))}
+        </div>
       ) : null}
+
       <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
         {isSubmitting ? "Submitting..." : "Request Appointment"}
       </button>

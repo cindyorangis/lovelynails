@@ -1,3 +1,5 @@
+import { activePromotions } from "../../site-data";
+
 export type BookingPayload = {
   name: string;
   phone: string;
@@ -5,7 +7,7 @@ export type BookingPayload = {
   services: string[];
   date: string;
   time: string;
-  claimedOffer: boolean;
+  couponCode?: string;
 };
 
 function sanitize(input: string) {
@@ -21,7 +23,7 @@ export function validateBookingPayload(input: BookingPayload) {
     : [];
   const date = input.date;
   const time = input.time;
-  const claimedOffer = Boolean(input.claimedOffer);
+  const couponCode = sanitize(input.couponCode ?? "").toUpperCase();
 
   if (!name || !phone || !email || services.length === 0 || !date || !time) {
     return { ok: false as const, error: "Please fill out all fields." };
@@ -47,8 +49,17 @@ export function validateBookingPayload(input: BookingPayload) {
     return { ok: false as const, error: "Please choose a valid time." };
   }
 
+  if (couponCode) {
+    const validCodes = activePromotions.map((promo) =>
+      promo.couponCode.toUpperCase(),
+    );
+    if (!validCodes.includes(couponCode)) {
+      return { ok: false as const, error: "Invalid coupon code." };
+    }
+  }
+
   return {
     ok: true as const,
-    value: { name, phone, email, services, date, time, claimedOffer },
+    value: { name, phone, email, services, date, time, couponCode },
   };
 }
