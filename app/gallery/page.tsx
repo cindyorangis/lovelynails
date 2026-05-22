@@ -41,6 +41,7 @@ export default function GalleryPage() {
             <div className="gallery-meta">
               <h2>{item.title}</h2>
               <p>{item.category}</p>
+              <p className="gallery-desc">{item.description}</p>
             </div>
           </article>
         ))}

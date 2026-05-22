@@ -201,6 +201,10 @@ h2 {
   margin: 0.25rem 0 0;
   color: var(--muted);
 }
+.gallery-desc {
+  margin-top: 0.45rem !important;
+  line-height: 1.45;
+}
 .insta-card {
   display: grid;
   gap: 0.7rem;

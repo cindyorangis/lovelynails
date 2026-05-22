@@ -1,165 +1,199 @@
+export type GalleryCategory =
+  | "Artificial Nail"
+  | "Pedicure"
+  | "Waxing"
+  | "Facial"
+  | "Salon";
+
 export type GalleryEditableItem = {
   file: `${number}.jpg`;
   title: string;
-  category: string;
-  alt?: string;
+  description: string;
+  category: GalleryCategory;
 };
 
-// Fill these in when ready. Keep `file` as-is, then edit `title` and `category`.
+// You can edit title/description/category freely.
 export const galleryEditableItems: GalleryEditableItem[] = [
   {
     file: "1.jpg",
-    title: "Stiletto / Glitter Accent",
-    category:
-      "Sharp, stiletto-shaped nails with a mix of matte white and fine silver glitter accents.",
+    title: "Stiletto Glitter Accent",
+    description:
+      "Sharp stiletto-shaped nails with matte white tones and fine silver glitter accent details.",
+    category: "Artificial Nail",
   },
   {
     file: "2.jpg",
-    title:
-      "Almond-shaped nails featuring intricate blue floral hand-painting and small 3D pearl embellishments.",
-    category: "Floral Art / Embellished",
+    title: "Blue Floral Pearl Set",
+    description:
+      "Almond-shaped nails with intricate blue floral hand painting and small 3D pearl embellishments.",
+    category: "Artificial Nail",
   },
   {
     file: "3.jpg",
-    title:
-      "Square-shaped nails with a traditional French tip, featuring a mix of solid white and silver glitter tips.",
-    category: "French Tip / Glitter Ombré",
+    title: "French Tip Glitter Blend",
+    description:
+      "Square-shaped nails with traditional French tips combined with silver glitter accents.",
+    category: "Artificial Nail",
   },
   {
     file: "4.jpg",
-    title: "Nude & Gold Swirl Art",
-    category:
-      "Almond-shaped nude base featuring elegant white swoops and delicate gold glitter line work.",
+    title: "Nude and Gold Swirl Art",
+    description:
+      "Elegant nude base with white swoops and delicate gold glitter line work.",
+    category: "Artificial Nail",
   },
   {
     file: "5.jpg",
     title: "Emerald Marble Inlay",
-    category:
-      "A high-contrast mix of deep emerald green solid nails and marble-effect accent nails.",
+    description:
+      "Deep emerald solids paired with marble-effect accent nails for high contrast.",
+    category: "Artificial Nail",
   },
   {
     file: "6.jpg",
-    title: "Minimalist Micro-Studs",
-    category:
-      "A soft, milky nude almond base accented with tiny, minimalist gold micro-studs or beads.",
+    title: "Minimalist Micro Studs",
+    description:
+      "Soft milky nude almond base accented with tiny minimalist gold micro-studs.",
+    category: "Artificial Nail",
   },
   {
     file: "7.jpg",
     title: "Gold Starry Gradient",
-    category:
-      "Champagne gold glitter mixed with star-shaped sequins on a nude-to-gold gradient base.",
+    description:
+      "Champagne glitter and star sequins over a nude-to-gold gradient base.",
+    category: "Artificial Nail",
   },
   {
     file: "8.jpg",
-    title: "Pink Shimmer Ombré",
-    category:
-      'Soft pink "boomer" or ombré style with a fine iridescent shimmer overlay.',
+    title: "Pink Shimmer Ombre",
+    description:
+      "Soft pink ombre style with a fine iridescent shimmer overlay.",
+    category: "Artificial Nail",
   },
   {
     file: "9.jpg",
-    title: "Cherry Blossom Art",
-    category:
-      "Detailed hand-painted cherry blossom branches on a milky white translucent base.",
+    title: "Cherry Blossom Detail",
+    description:
+      "Hand-painted cherry blossom branches on a translucent milky base.",
+    category: "Artificial Nail",
   },
   {
     file: "10.jpg",
     title: "Gold Metallic French",
-    category:
-      'Square-shaped milky nude nails with a delicate metallic gold "cuff" or French line at the tip.',
+    description:
+      "Milky nude square nails with delicate metallic gold French-style tip lines.",
+    category: "Artificial Nail",
   },
   {
     file: "11.jpg",
-    title: "High-Gloss Nude Stiletto",
-    category:
-      "Classic stiletto nails in a clean, high-gloss solid nude/beige polish.",
+    title: "Glossy Nude Stiletto",
+    description:
+      "Classic long stiletto nails in a clean, high-gloss nude finish.",
+    category: "Artificial Nail",
   },
   {
     file: "12.jpg",
-    title:
-      "Square nails in a pastel mix of pink and blue, featuring a diamond-grid pattern with silver linework.",
-    category: "Pastel Geometric Grid",
+    title: "Pastel Grid Design",
+    description:
+      "Square nails in pink and blue with geometric diamond-grid silver linework.",
+    category: "Artificial Nail",
   },
   {
     file: "13.jpg",
     title: "Monochrome Heart Matte",
-    category:
-      'A high-contrast "His & Hers" style with one hand in matte black and the other in matte white with a minimalist heart detail.',
+    description:
+      "Matte black and matte white contrast set with a minimalist heart detail.",
+    category: "Artificial Nail",
   },
   {
     file: "14.jpg",
-    title: "Burgundy & Rose Gold Foil",
-    category:
-      "Long coffin-shaped nails in deep burgundy and rose-gold glitter with foil accents and a jelly-gloss finish.",
+    title: "Burgundy Rose Gold Foil",
+    description:
+      "Long coffin nails in deep burgundy and rose-gold foil with jelly-gloss finish.",
+    category: "Artificial Nail",
   },
   {
     file: "15.jpg",
-    title: "French Tip Butterfly Luxe",
-    category:
-      "Long tapered square nails with a classic white French tip and an intricate 3D butterfly/rhinestone accent.",
+    title: "French Butterfly Luxe",
+    description:
+      "Long tapered square nails with classic French tips and 3D butterfly rhinestone accents.",
+    category: "Artificial Nail",
   },
   {
     file: "16.jpg",
-    title: "Full Leg Waxing",
-    category: "Smooth hair removal services.",
+    title: "Full Leg Wax Result",
+    description:
+      "Smooth waxing result example from our full leg waxing service.",
+    category: "Waxing",
   },
   {
     file: "17.jpg",
-    title: "Facial",
-    category: "Professional cream or clay mask application.",
+    title: "Facial Service Snapshot",
+    description: "Facial care in progress with professional mask application.",
+    category: "Facial",
   },
   {
     file: "18.jpg",
-    title: "Classic Ombré Refinement",
-    category:
-      'Elegant almond-shaped nails with a soft, milky white-to-nude "Baby Boomer" gradient.',
+    title: "Classic Ombre Refinement",
+    description:
+      "Elegant almond nails with soft milky white to nude baby-boomer gradient.",
+    category: "Artificial Nail",
   },
   {
     file: "19.jpg",
     title: "Pearl Shimmer Gradient",
-    category:
-      "Long coffin-shaped nails with a milky white base and a dense silver/pearl shimmer gradient from the cuticle.",
+    description:
+      "Long coffin nails with milky white base and dense pearl shimmer from cuticle.",
+    category: "Artificial Nail",
   },
   {
     file: "20.jpg",
-    title: "Lavender & Glitter Mix",
-    category:
-      "Square nails featuring a coordinated palette of lavender, solid white, and a full-coverage silver glitter accent.",
+    title: "Lavender Glitter Mix",
+    description:
+      "Coordinated palette of lavender, white, and silver glitter accent nails.",
+    category: "Artificial Nail",
   },
   {
     file: "21.jpg",
-    title: "Pink Aura & 3D Bow",
-    category:
-      'Square nails with a "blush" or "aura" center in vibrant pink, topped with a 3D translucent bow charm.',
+    title: "Pink Aura Bow",
+    description:
+      "Square nails with vibrant pink aura centers and 3D translucent bow charm.",
+    category: "Artificial Nail",
   },
   {
     file: "22.jpg",
-    title: "Aqua Dream Abstract",
-    category:
-      'Long square nails with a soft peach-to-aqua gradient and abstract white and blue "swirl" linework.',
+    title: "Aqua Abstract Swirl",
+    description:
+      "Long square nails with peach-to-aqua gradient and abstract white-blue linework.",
+    category: "Artificial Nail",
   },
   {
     file: "23.jpg",
-    title: "Cyber-Chrome Aura",
-    category:
-      'Almond nails featuring a purple "aura" base, iridescent chrome finish, and 3D metallic silver accents.',
+    title: "Chrome Aura Accent",
+    description:
+      "Almond nails with purple aura base, iridescent chrome finish, and metallic accents.",
+    category: "Artificial Nail",
   },
   {
     file: "24.jpg",
-    title: "Burgundy Royal Floral",
-    category:
-      'Almond nails with a mix of deep burgundy, gold geometric "caged" lines, and hand-painted ruby florals.',
+    title: "Burgundy Floral Royal",
+    description:
+      "Almond nails mixing burgundy tones, geometric gold lines, and hand-painted floral details.",
+    category: "Artificial Nail",
   },
   {
     file: "25.jpg",
-    title: "Our Salon Interior",
-    category:
-      "An interior shot of our professional pedicure stations and a clean, modern workstation area.",
+    title: "Salon Pedicure Area",
+    description:
+      "Interior photo showing pedicure stations and a clean modern salon setup.",
+    category: "Pedicure",
   },
   {
     file: "26.jpg",
-    title: "Our Salon Storefront",
-    category:
-      "The storefront of Lovely Nail on Islington Ave, showing the salon's signage and accessibility.",
+    title: "Lovely Nails Storefront",
+    description:
+      "Front exterior view of Lovely Nails on Islington Ave in North York.",
+    category: "Salon",
   },
 ];
 
@@ -167,28 +201,19 @@ export type GalleryItem = {
   src: string;
   alt: string;
   title: string;
-  category: string;
+  description: string;
+  category: GalleryCategory;
 };
 
-const fallbackCategory = "Nail Design";
-
-export const galleryItems: GalleryItem[] = galleryEditableItems.map(
-  (item, index) => {
-    const padded = String(index + 1).padStart(2, "0");
-    const fallbackTitle = `Design ${padded}`;
-    const title = item.title.trim() || fallbackTitle;
-    const category = item.category.trim() || fallbackCategory;
-
-    return {
-      src: `/gallery/${item.file}`,
-      title,
-      category,
-      alt:
-        item.alt?.trim() ||
-        `Lovely Nails ${category.toLowerCase()} style ${padded} in North York`,
-    };
-  },
-);
+export const galleryItems: GalleryItem[] = galleryEditableItems.map((item) => {
+  return {
+    src: `/gallery/${item.file}`,
+    title: item.title.trim(),
+    description: item.description.trim(),
+    category: item.category,
+    alt: `Lovely Nails ${item.title.toLowerCase()} in North York`,
+  };
+});
 
 export const galleryCategories = Array.from(
   new Set(galleryItems.map((item) => item.category)),
