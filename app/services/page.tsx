@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import PromoBanner from "../components/promo-banner";
 import { buildTitle, localDescription } from "../site-data";
 
 export const metadata: Metadata = {
@@ -22,6 +23,7 @@ export default function ServicesPage() {
         Professional nail services for clients in North York and surrounding
         Toronto neighborhoods.
       </p>
+      <PromoBanner />
       <div className="list-wrap">
         {services.map((service) => (
           <article key={service.name} className="list-item">

@@ -59,6 +59,42 @@ a {
 .main-nav a:hover {
   color: var(--primary-deep);
 }
+.promo-shell {
+  padding-bottom: 0.9rem;
+}
+.promo {
+  border: 1px solid #f2b6cd;
+  background: linear-gradient(135deg, #fff5f8 0%, #ffe6ef 100%);
+  border-radius: 0.9rem;
+  padding: 1rem;
+  display: grid;
+  gap: 0.35rem;
+}
+.promo-compact {
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  column-gap: 0.8rem;
+}
+.promo-compact .promo-details {
+  display: none;
+}
+.promo-label {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--primary-deep);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.promo-headline {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+}
+.promo-details {
+  margin: 0;
+  color: #664857;
+}
 .page-stack {
   display: grid;
   gap: 1.4rem;
@@ -217,5 +253,8 @@ h2 {
   .nav-wrap {
     align-items: start;
     flex-direction: column;
+  }
+  .promo-compact {
+    grid-template-columns: 1fr;
   }
 }

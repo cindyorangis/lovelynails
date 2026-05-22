@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import PromoBanner from "./components/promo-banner";
 import { buildTitle, localDescription, siteConfig } from "./site-data";
 
 export const metadata: Metadata = {
@@ -47,6 +48,7 @@ export default function HomePage() {
           </Link>
         </div>
       </section>
+      <PromoBanner />
 
       <section className="card-grid">
         <article className="card">

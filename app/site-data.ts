@@ -35,6 +35,15 @@ export const mainNav = [
   { href: "/blog", label: "Blog" },
 ];
 
+export const promotion = {
+  isActive: true,
+  label: "Limited-Time Offer",
+  headline: "20% off Monday to Wednesday before 3 PM",
+  details: "Valid on gel manicure + spa pedicure combo. Ends June 30, 2026.",
+  ctaLabel: "Claim This Offer",
+  ctaHref: "/booking",
+};
+
 export function buildTitle(pageTitle: string) {
   return `${pageTitle} | ${siteConfig.name} North York`;
 }
