@@ -129,11 +129,45 @@ h2 {
   display: grid;
   gap: 0.8rem;
 }
-.gallery-tile {
-  min-height: 120px;
+.gallery-filters {
   display: flex;
-  align-items: end;
-  background: linear-gradient(140deg, #fff, #ffeef4);
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.gallery-chip {
+  border: 1px solid var(--border);
+  color: var(--primary-deep);
+  padding: 0.32rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  background: #fff;
+}
+.gallery-card {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 0.9rem;
+  background: #fff;
+}
+.gallery-image-wrap {
+  aspect-ratio: 4 / 5;
+}
+.gallery-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.gallery-meta {
+  padding: 0.8rem 0.9rem 1rem;
+}
+.gallery-meta p {
+  margin: 0.25rem 0 0;
+  color: var(--muted);
+}
+.insta-card {
+  display: grid;
+  gap: 0.7rem;
 }
 .booking-form {
   display: grid;
