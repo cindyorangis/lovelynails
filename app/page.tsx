@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import PromoBanner from "./components/promo-banner";
-import { buildTitle, localDescription, siteConfig } from "./site-data";
+import {
+  activePromotions,
+  buildTitle,
+  localDescription,
+  siteConfig,
+} from "./site-data";
 
 export const metadata: Metadata = {
   title: buildTitle("Nail Salon in North York, Ontario"),
@@ -48,7 +52,27 @@ export default function HomePage() {
           </Link>
         </div>
       </section>
-      <PromoBanner />
+
+      {activePromotions.length > 0 && (
+        <section aria-label="Current promotions">
+          <h2>Current Offers</h2>
+          <div className="card-grid">
+            {activePromotions.map((promo) => (
+              <article key={promo.id} className="card">
+                <p className="eyebrow">{promo.label}</p>
+                <h3>{promo.headline}</h3>
+                <p>{promo.details}</p>
+                <p className="muted-note">
+                  Code: <strong>{promo.couponCode}</strong>
+                </p>
+                <Link href={promo.ctaHref} className="btn btn-primary">
+                  {promo.ctaLabel}
+                </Link>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
 
       <section className="card-grid">
         <article className="card">
