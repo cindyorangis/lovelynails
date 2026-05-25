@@ -51,11 +51,12 @@ export default function RootLayout({
         <footer className="site-footer">
           <div className="container footer-grid">
             <div>
-              <h2>Lovely Nails</h2>
-              <p>
-                Nail salon in North York, Ontario focused on clean care and
-                beautiful results.
-              </p>
+              <h2>Business Hours</h2>
+              <ul>
+                {siteConfig.hours.map((hour, index) => (
+                  <li key={index}>{hour}</li>
+                ))}
+              </ul>
             </div>
             <div>
               <h2>Visit Us</h2>
