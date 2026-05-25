@@ -3,6 +3,20 @@ import Link from "next/link";
 import "./globals.css";
 import { mainNav, siteConfig } from "./site-data";
 
+// Get the current day of the week
+function getTodayDay(): string {
+  const days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  return days[new Date().getDay()];
+}
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.baseUrl),
   title: {
@@ -30,6 +44,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const today = getTodayDay();
+
   return (
     <html lang="en-CA">
       <body>
@@ -53,9 +69,18 @@ export default function RootLayout({
             <div>
               <h2>Business Hours</h2>
               <ul>
-                {siteConfig.hours.map((hour, index) => (
-                  <li key={index}>{hour}</li>
-                ))}
+                {siteConfig.hours.map((hour) => {
+                  const isToday = hour.includes(today);
+                  return (
+                    <li
+                      key={hour}
+                      className={isToday ? "hour-today" : ""}
+                      aria-current={isToday ? "date" : undefined}
+                    >
+                      {hour}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
             <div>
