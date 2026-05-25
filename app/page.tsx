@@ -8,10 +8,39 @@ import {
   siteConfig,
 } from "./site-data";
 
+import ReviewsCarousel from "../components/ReviewCarousel";
+
 export const metadata: Metadata = {
   title: buildTitle("Nail Salon in North York, Ontario"),
   description: localDescription("Professional nail salon services"),
 };
+
+const featureCards = [
+  {
+    id: "services",
+    icon: "✦",
+    title: "Full Service Menu",
+    body: "Gel, shellac, acrylic, dip powder, spa pedicures, waxing, facials, and bridal packages — all under one roof.",
+    href: "/services",
+    cta: "See all services",
+  },
+  {
+    id: "hygiene",
+    icon: "◈",
+    title: "Clean-First Standards",
+    body: "Single-use files and buffers, autoclaved metal tools, fresh basin liners every client. We don't cut corners on hygiene.",
+    href: "/booking",
+    cta: "Book now",
+  },
+  {
+    id: "location",
+    icon: "◉",
+    title: "Easy to Get To",
+    body: "Located on Islington Ave in North York. Street parking available and a short walk from the 37 Islington bus.",
+    href: "/contact-location",
+    cta: "Get directions",
+  },
+];
 
 // Pull a few representative reviews — move these to site-data if you want
 // to manage them centrally or fetch from Google Places API later.
@@ -39,33 +68,6 @@ const featuredReviews = [
     author: "Michi O",
     rating: 5,
     text: "The owner did my nails and another staff member did my toes. I don't live around here, I just looked at the reviews from Google and decided to do my nails because my car was taking about 3 hours to get fixed. I am so happy and pleased with the service, the quality and hospitality especially from the owner. She is so nice and sweet. Thank you so much. 💕",
-  },
-];
-
-const featureCards = [
-  {
-    id: "services",
-    icon: "✦",
-    title: "Full Service Menu",
-    body: "Gel, shellac, acrylic, dip powder, spa pedicures, waxing, facials, and bridal packages — all under one roof.",
-    href: "/services",
-    cta: "See all services",
-  },
-  {
-    id: "hygiene",
-    icon: "◈",
-    title: "Clean-First Standards",
-    body: "Single-use files and buffers, autoclaved metal tools, fresh basin liners every client. We don't cut corners on hygiene.",
-    href: "/booking",
-    cta: "Book now",
-  },
-  {
-    id: "location",
-    icon: "◉",
-    title: "Easy to Get To",
-    body: "Located on Islington Ave in North York. Street parking available and a short walk from the 37 Islington bus.",
-    href: "/contact-location",
-    cta: "Get directions",
   },
 ];
 
@@ -173,33 +175,9 @@ export default function HomePage() {
       </section>
 
       {/* ── Social proof / reviews ───────────────────────────────────── */}
-      <section aria-label="Client reviews">
-        <div className="section-header-row">
-          <h2>What clients are saying</h2>
-          <a
-            href="https://maps.app.goo.gl/HncsyCXjaVvt3dCq8"
-            className="inline-link"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            See all reviews →
-          </a>
-        </div>
-        <div className="card-grid">
-          {featuredReviews.map((review) => (
-            <blockquote key={review.id} className="card card--review">
-              <div
-                className="review__stars"
-                aria-label={`${review.rating} out of 5 stars`}
-              >
-                {"★".repeat(review.rating)}
-              </div>
-              <p className="review__text">"{review.text}"</p>
-              <footer className="review__author">— {review.author}</footer>
-            </blockquote>
-          ))}
-        </div>
-      </section>
+      {featuredReviews.length > 0 && (
+        <ReviewsCarousel reviews={featuredReviews} />
+      )}
 
       {/* ── Visit us (map embed + contact) ──────────────────────────── */}
       <section aria-label="Location and contact">
