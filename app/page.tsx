@@ -18,21 +18,27 @@ export const metadata: Metadata = {
 const featuredReviews = [
   {
     id: "r1",
-    author: "Sarah M.",
+    author: "Julie Santopolo",
     rating: 5,
-    text: "Absolutely love this place. The gel set lasted over three weeks without a single chip. The team is so friendly and the salon is spotless.",
+    text: "I have been coming here for a couple of years now. I am very pleased with the service that nail technique provides. Always on time and done in one hour for my refill and shellac. The value for the service is great. Will keep coming back to Lucky 💅",
   },
   {
     id: "r2",
-    author: "Priya K.",
+    author: "Alisha Makhija",
     rating: 5,
-    text: "Best pedicure I've had in North York. The deluxe treatment was worth every penny — left feeling completely relaxed.",
+    text: "This is my new favourite place to go for my nails. The staff pays attention to details and takes their time to give you the exact nails you want. They are very polite and patient as I took so long to choose the color. Absolutely in love with my new nails 😍 Thank You.",
   },
   {
     id: "r3",
-    author: "Danielle R.",
+    author: "Evy Grace Yap",
     rating: 5,
-    text: "Brought my daughter in for the kids' mani and we both got our nails done. Such a warm, welcoming space. We'll definitely be back.",
+    text: "I had an amazing afternoon! It's very close to where I live, and it's the best nail spa in my area so far. The staff is very approachable, and you can tell they really know what they're doing!",
+  },
+  {
+    id: "r4",
+    author: "Michi O",
+    rating: 5,
+    text: "The owner did my nails and another staff member did my toes. I don't live around here, I just looked at the reviews from Google and decided to do my nails because my car was taking about 3 hours to get fixed. I am so happy and pleased with the service, the quality and hospitality especially from the owner. She is so nice and sweet. Thank you so much. 💕",
   },
 ];
 
@@ -168,13 +174,8 @@ export default function HomePage() {
       <section aria-label="Client reviews">
         <div className="section-header-row">
           <h2>What clients are saying</h2>
-          {/*
-            Once you have a verified Google Business Profile, replace the
-            href below with your Google Reviews shortlink, e.g.:
-            https://g.page/r/YOUR_PLACE_ID/review
-          */}
           <a
-            href="https://g.page/r/YOUR_PLACE_ID/review"
+            href="https://maps.app.goo.gl/HncsyCXjaVvt3dCq8"
             className="inline-link"
             target="_blank"
             rel="noopener noreferrer"
