@@ -132,11 +132,13 @@ export default function HomePage() {
 
       {/* ── Active promotions ────────────────────────────────────────── */}
       {activePromotions.length > 0 && (
-        <section aria-label="Current promotions">
-          <h2>Current Offers</h2>
-          <div className="card-grid">
+        <section aria-label="Current promotions" className="promotions-section">
+          <h2 style={{ textAlign: "center", marginBottom: "2rem" }}>
+            Current Offers
+          </h2>
+          <div className="promo-grid" data-count={activePromotions.length}>
             {activePromotions.map((promo) => (
-              <article key={promo.id} className="card">
+              <article key={promo.id} className="card promo-card">
                 <p className="eyebrow">{promo.label}</p>
                 <h3>{promo.headline}</h3>
                 <p>{promo.details}</p>

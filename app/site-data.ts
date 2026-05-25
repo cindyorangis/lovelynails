@@ -1,7 +1,7 @@
 export const siteConfig = {
   name: "Lovely Nails",
   baseUrl: "https://www.lovelynailsnorthyork.com",
-  phone: "+1-416-743-1567",
+  phone: "416-743-1567",
   email: "hello@lovelynailsnorthyork.com",
   address: {
     streetAddress: "2938 Islington Ave.",

@@ -537,3 +537,53 @@ h2 {
     grid-template-columns: 1fr;
   }
 }
+
+/* ── Promotions Grid Layout ────────────────────────────────────────── */
+
+.promo-grid {
+  display: grid;
+  gap: 2rem;
+  justify-content: center; /* Ensures the grid itself is centered */
+  margin: 0 auto;
+}
+
+/* 1 Promo: Centered, restricted width so it doesn't look stretched */
+.promo-grid[data-count="1"] {
+  grid-template-columns: minmax(300px, 450px);
+}
+
+/* 2 Promos: Side-by-side, max width to keep them close together */
+.promo-grid[data-count="2"] {
+  grid-template-columns: repeat(2, minmax(300px, 400px));
+  max-width: 900px;
+}
+
+/* 3+ Promos: Standard 3-column responsive grid */
+.promo-grid[data-count="3"],
+.promo-grid[data-count="4"] {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  width: 100%;
+}
+
+/* Optional: Add a slight highlight/border to make promo cards pop */
+.promo-card {
+  border: 2px solid var(--primary-color, #e5e7eb); /* Adjust color as needed */
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Pushes the button to the bottom so all cards are equal height */
+.promo-card .btn {
+  margin-top: auto;
+}
+
+/* Mobile Fallback: Stack them all on smaller screens */
+@media (max-width: 768px) {
+  .promo-grid[data-count="2"],
+  .promo-grid[data-count="3"],
+  .promo-grid[data-count="4"] {
+    grid-template-columns: 1fr;
+    max-width: 450px;
+  }
+}
