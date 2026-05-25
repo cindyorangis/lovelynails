@@ -48,32 +48,13 @@ export type Promotion = {
 
 export const promotions: Promotion[] = [
   {
-    id: "weekday-combo",
+    id: "birthday-discount",
     isActive: true,
-    label: "Limited-Time Offer",
-    headline: "20% off Monday to Wednesday before 3 PM",
-    details: "Valid on gel manicure + spa pedicure combo. Ends June 30, 2026.",
-    couponCode: "WEEKDAY20",
-    ctaLabel: "Use Coupon Code",
-    ctaHref: "/booking",
-  },
-  {
-    id: "bridal-discount",
-    isActive: true,
-    label: "Bridal Offer",
-    headline: "Bridal services special discount",
-    details: "Use this for bridal consultations, trials, and big-day services.",
-    couponCode: "BRIDAL10",
-    ctaLabel: "Use Coupon Code",
-    ctaHref: "/booking",
-  },
-  {
-    id: "grad-prom",
-    isActive: true,
-    label: "Grad & Prom",
-    headline: "Save on grad and prom glam sets",
-    details: "Perfect for prom prep, event nails, and matching party looks.",
-    couponCode: "PROM15",
+    label: "Birthday Special",
+    headline: "10% off during your birthday week",
+    details:
+      "Celebrate your special day with 10% off services. Minimum $40 spend required. Valid during your birthday week only. Cannot be combined with any other promotion or offer.",
+    couponCode: "BIRTHDAY10",
     ctaLabel: "Use Coupon Code",
     ctaHref: "/booking",
   },
