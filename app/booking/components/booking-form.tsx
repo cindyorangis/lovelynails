@@ -7,6 +7,7 @@ import {
   serviceCategories,
 } from "../../services/services-data";
 
+// ── Types ────────────────────────────────────────────────────────
 type FormState = {
   name: string;
   phone: string;
@@ -27,19 +28,22 @@ const initialState: FormState = {
   couponCode: "",
 };
 
-// Business hours per day of week (0 = Sunday)
+// ── Business hours ───────────────────────────────────────────────
 const BUSINESS_HOURS: Record<number, { open: string; close: string } | null> = {
-  0: { open: "10:00", close: "17:00" }, // Sunday
-  1: { open: "09:30", close: "19:30" }, // Monday
-  2: { open: "09:30", close: "19:30" }, // Tuesday
-  3: { open: "09:30", close: "19:30" }, // Wednesday
-  4: { open: "09:30", close: "19:30" }, // Thursday
-  5: { open: "09:30", close: "19:30" }, // Friday
-  6: { open: "09:30", close: "18:30" }, // Saturday
+  0: { open: "10:00", close: "17:00" },
+  1: { open: "09:30", close: "19:30" },
+  2: { open: "09:30", close: "19:30" },
+  3: { open: "09:30", close: "19:30" },
+  4: { open: "09:30", close: "19:30" },
+  5: { open: "09:30", close: "19:30" },
+  6: { open: "09:30", close: "18:30" },
 };
 
-function generateTimeSlots(open: string, close: string): string[] {
-  const slots: string[] = [];
+function generateTimeSlots(
+  open: string,
+  close: string,
+): Array<{ value: string; label: string }> {
+  const slots: Array<{ value: string; label: string }> = [];
   const [openH, openM] = open.split(":").map(Number);
   const [closeH, closeM] = close.split(":").map(Number);
   const openMinutes = openH * 60 + openM;
@@ -48,18 +52,47 @@ function generateTimeSlots(open: string, close: string): string[] {
   for (let m = openMinutes; m < closeMinutes; m += 15) {
     const h = Math.floor(m / 60);
     const min = m % 60;
-    const label = new Date(0, 0, 0, h, min).toLocaleTimeString("en-CA", {
-      hour: "numeric",
-      minute: "2-digit",
-      hour12: true,
+    slots.push({
+      value: `${String(h).padStart(2, "0")}:${String(min).padStart(2, "0")}`,
+      label: new Date(0, 0, 0, h, min).toLocaleTimeString("en-CA", {
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+      }),
     });
-    const value = `${String(h).padStart(2, "0")}:${String(min).padStart(2, "0")}`;
-    slots.push(value + "|" + label);
   }
-
   return slots;
 }
 
+// ── Promo badge helper ───────────────────────────────────────────
+const VALID_CODES = new Set(
+  activePromotions.map((p) => p.couponCode.toUpperCase()),
+);
+
+function PromoMatch({ code }: { code: string }) {
+  const upper = code.toUpperCase();
+  if (!upper) return null;
+  const promo = activePromotions.find(
+    (p) => p.couponCode.toUpperCase() === upper,
+  );
+  if (promo) {
+    return (
+      <p className="booking-coupon-match booking-coupon-match--valid">
+        ✓ {promo.headline}
+      </p>
+    );
+  }
+  if (upper.length >= 3) {
+    return (
+      <p className="booking-coupon-match booking-coupon-match--invalid">
+        Code not recognised
+      </p>
+    );
+  }
+  return null;
+}
+
+// ── Component ────────────────────────────────────────────────────
 type BookingFormProps = {
   initialServices?: string[];
 };
@@ -71,33 +104,43 @@ export default function BookingForm({
     ...initialState,
     services: initialServices,
   });
+  const [openCategories, setOpenCategories] = useState<Set<string>>(
+    () => new Set(serviceCategories.map((c) => c.title)),
+  );
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [result, setResult] = useState<{
     type: "ok" | "error";
     message: string;
   } | null>(null);
 
-  // Derive available time slots from selected date
   const timeSlots = useMemo(() => {
     if (!form.date) return [];
-    // Parse as local date (YYYY-MM-DD) without timezone shift
     const [y, mo, d] = form.date.split("-").map(Number);
-    const dayOfWeek = new Date(y, mo - 1, d).getDay();
-    const hours = BUSINESS_HOURS[dayOfWeek];
+    const dow = new Date(y, mo - 1, d).getDay();
+    const hours = BUSINESS_HOURS[dow];
     if (!hours) return [];
     return generateTimeSlots(hours.open, hours.close);
   }, [form.date]);
 
-  // Minimum selectable date = today
   const today = new Date().toISOString().split("T")[0];
+
+  const selectedCount = form.services.length;
 
   function toggleService(value: string) {
     setForm((prev) => ({
       ...prev,
       services: prev.services.includes(value)
-        ? prev.services.filter((item) => item !== value)
+        ? prev.services.filter((s) => s !== value)
         : [...prev.services, value],
     }));
+  }
+
+  function toggleCategory(title: string) {
+    setOpenCategories((prev) => {
+      const next = new Set(prev);
+      next.has(title) ? next.delete(title) : next.add(title);
+      return next;
+    });
   }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -106,25 +149,20 @@ export default function BookingForm({
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("/api/bookings", {
+      const res = await fetch("/api/bookings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
+      const data = (await res.json()) as { message?: string; error?: string };
 
-      const data = (await response.json()) as {
-        message?: string;
-        error?: string;
-      };
-
-      if (!response.ok) {
+      if (!res.ok) {
         setResult({
           type: "error",
           message: data.error ?? "Something went wrong.",
         });
         return;
       }
-
       setResult({ type: "ok", message: data.message ?? "Request submitted." });
       setForm(initialState);
     } catch {
@@ -134,168 +172,260 @@ export default function BookingForm({
     }
   }
 
+  // ── Success screen ─────────────────────────────────────────────
+  if (result?.type === "ok") {
+    return (
+      <div className="booking-success" role="status" aria-live="polite">
+        <div className="booking-success__icon" aria-hidden="true">
+          ✓
+        </div>
+        <h2>You're booked in!</h2>
+        <p>{result.message}</p>
+        <button className="btn btn-secondary" onClick={() => setResult(null)}>
+          Make another booking
+        </button>
+      </div>
+    );
+  }
+
   return (
     <form
-      className="booking-form booking-form-wide"
+      className="booking-form"
       aria-label="Appointment request form"
       onSubmit={handleSubmit}
     >
-      <label>
-        Full Name
-        <input
-          type="text"
-          name="name"
-          placeholder="Your name"
-          value={form.name}
-          onChange={(event) =>
-            setForm((prev) => ({ ...prev, name: event.target.value }))
-          }
-          required
-        />
-      </label>
-      <label>
-        Phone Number
-        <input
-          type="tel"
-          name="phone"
-          placeholder="(416) 555-0188"
-          value={form.phone}
-          onChange={(event) =>
-            setForm((prev) => ({ ...prev, phone: event.target.value }))
-          }
-          required
-        />
-      </label>
-      <label>
-        Email Address
-        <input
-          type="email"
-          name="email"
-          placeholder="you@example.com"
-          value={form.email}
-          onChange={(event) =>
-            setForm((prev) => ({ ...prev, email: event.target.value }))
-          }
-          required
-        />
-      </label>
+      {/* ── Step 1: Personal details ─────────────────────────── */}
+      <fieldset className="booking-fieldset">
+        <legend className="booking-legend">
+          <span className="booking-legend__step">1</span>
+          Your details
+        </legend>
+        <div className="booking-fields-row">
+          <label className="booking-label">
+            Full name
+            <input
+              type="text"
+              name="name"
+              placeholder="Jane Smith"
+              value={form.name}
+              autoComplete="name"
+              required
+              onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))}
+            />
+          </label>
+          <label className="booking-label">
+            Phone number
+            <input
+              type="tel"
+              name="phone"
+              placeholder="(416) 555-0188"
+              value={form.phone}
+              autoComplete="tel"
+              required
+              onChange={(e) =>
+                setForm((p) => ({ ...p, phone: e.target.value }))
+              }
+            />
+          </label>
+        </div>
+        <label className="booking-label">
+          Email address
+          <input
+            type="email"
+            name="email"
+            placeholder="jane@example.com"
+            value={form.email}
+            autoComplete="email"
+            required
+            onChange={(e) => setForm((p) => ({ ...p, email: e.target.value }))}
+          />
+        </label>
+      </fieldset>
 
-      {/* Date + Time grouped together, before the long services list */}
-      <label>
-        Preferred Date
-        <input
-          type="date"
-          name="date"
-          value={form.date}
-          min={today}
-          onChange={(event) =>
-            setForm((prev) => ({
-              ...prev,
-              date: event.target.value,
-              time: "", // reset time when date changes
-            }))
-          }
-          required
-        />
-      </label>
-
-      <label>
-        Preferred Time
-        <select
-          name="time"
-          value={form.time}
-          onChange={(event) =>
-            setForm((prev) => ({ ...prev, time: event.target.value }))
-          }
-          required
-          disabled={timeSlots.length === 0}
-        >
-          <option value="">
-            {form.date
-              ? timeSlots.length === 0
-                ? "Closed that day"
-                : "Select a time"
-              : "Pick a date first"}
-          </option>
-          {timeSlots.map((slot) => {
-            const [value, label] = slot.split("|");
-            return (
-              <option key={value} value={value}>
-                {label}
+      {/* ── Step 2: Date & time ──────────────────────────────── */}
+      <fieldset className="booking-fieldset">
+        <legend className="booking-legend">
+          <span className="booking-legend__step">2</span>
+          Date &amp; time
+        </legend>
+        <div className="booking-fields-row">
+          <label className="booking-label">
+            Preferred date
+            <input
+              type="date"
+              name="date"
+              value={form.date}
+              min={today}
+              required
+              onChange={(e) =>
+                setForm((p) => ({ ...p, date: e.target.value, time: "" }))
+              }
+            />
+          </label>
+          <label className="booking-label">
+            Preferred time
+            <select
+              name="time"
+              value={form.time}
+              required
+              disabled={timeSlots.length === 0}
+              onChange={(e) => setForm((p) => ({ ...p, time: e.target.value }))}
+            >
+              <option value="">
+                {!form.date
+                  ? "Pick a date first"
+                  : timeSlots.length === 0
+                    ? "Closed that day"
+                    : "Select a time"}
               </option>
-            );
-          })}
-        </select>
-      </label>
+              {timeSlots.map((slot) => (
+                <option key={slot.value} value={slot.value}>
+                  {slot.label}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+        <p className="booking-hours-note muted-note">
+          Mon–Fri 9:30 am – 7:30 pm · Sat 9:30 am – 6:30 pm · Sun 10:00 am –
+          5:00 pm
+        </p>
+      </fieldset>
 
-      <section
-        className="card booking-service-select"
-        aria-label="Select one or more services"
-      >
-        <h2>Select Services</h2>
-        <p className="muted-note">
-          Tap all services you want for this appointment.
+      {/* ── Step 3: Services ─────────────────────────────────── */}
+      <fieldset className="booking-fieldset">
+        <legend className="booking-legend">
+          <span className="booking-legend__step">3</span>
+          Services
+          {selectedCount > 0 && (
+            <span className="booking-legend__badge">
+              {selectedCount} selected
+            </span>
+          )}
+        </legend>
+        <p className="muted-note" style={{ marginBottom: "1rem" }}>
+          Select everything you'd like for this visit.
         </p>
 
-        <div className="booking-service-groups">
-          {serviceCategories.map((category) => (
-            <div key={category.title} className="booking-service-group">
-              <h3>{category.title}</h3>
-              <div className="booking-service-items">
-                {category.items.map((item) => {
-                  const value = buildServiceValue(category.title, item.name);
-                  const checked = form.services.includes(value);
+        <div className="booking-categories">
+          {serviceCategories.map((category) => {
+            const isOpen = openCategories.has(category.title);
+            const selectedInCategory = category.items.filter((item) =>
+              form.services.includes(
+                buildServiceValue(category.title, item.name),
+              ),
+            ).length;
 
-                  return (
-                    <label key={value} className="service-check">
-                      <input
-                        type="checkbox"
-                        checked={checked}
-                        onChange={() => toggleService(value)}
-                      />
-                      <span>
-                        {item.name} ({item.price})
+            return (
+              <div key={category.title} className="booking-category">
+                <button
+                  type="button"
+                  className="booking-category__toggle"
+                  aria-expanded={isOpen}
+                  onClick={() => toggleCategory(category.title)}
+                >
+                  <span className="booking-category__title">
+                    {category.title}
+                  </span>
+                  <span className="booking-category__meta">
+                    {selectedInCategory > 0 && (
+                      <span className="booking-category__count">
+                        {selectedInCategory}
                       </span>
-                    </label>
-                  );
-                })}
+                    )}
+                    <span
+                      className="booking-category__chevron"
+                      aria-hidden="true"
+                      style={{
+                        transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
+                      }}
+                    >
+                      ▾
+                    </span>
+                  </span>
+                </button>
+
+                {isOpen && (
+                  <div className="booking-category__items">
+                    {category.items.map((item) => {
+                      const value = buildServiceValue(
+                        category.title,
+                        item.name,
+                      );
+                      const checked = form.services.includes(value);
+
+                      return (
+                        <label
+                          key={value}
+                          className={`service-check${checked ? " service-check--checked" : ""}`}
+                        >
+                          <input
+                            type="checkbox"
+                            checked={checked}
+                            onChange={() => toggleService(value)}
+                          />
+                          <span className="service-check__name">
+                            {item.name}
+                          </span>
+                          <span className="service-check__price">
+                            {item.price}
+                          </span>
+                        </label>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
-      </section>
+      </fieldset>
 
-      <label>
-        Coupon Code
-        <input
-          type="text"
-          name="couponCode"
-          placeholder="Enter coupon code"
-          value={form.couponCode}
-          onChange={(event) =>
-            setForm((prev) => ({
-              ...prev,
-              couponCode: event.target.value.toUpperCase().trim(),
-            }))
-          }
-        />
-      </label>
+      {/* ── Step 4: Coupon ───────────────────────────────────── */}
+      <fieldset className="booking-fieldset">
+        <legend className="booking-legend">
+          <span className="booking-legend__step">4</span>
+          Promo code{" "}
+          <span className="booking-legend__optional">(optional)</span>
+        </legend>
+        <label className="booking-label">
+          Coupon code
+          <input
+            type="text"
+            name="couponCode"
+            placeholder="e.g. WEEKDAY20"
+            value={form.couponCode}
+            onChange={(e) =>
+              setForm((p) => ({
+                ...p,
+                couponCode: e.target.value.toUpperCase().trim(),
+              }))
+            }
+          />
+        </label>
+        <PromoMatch code={form.couponCode} />
+      </fieldset>
 
-      {activePromotions.length > 0 ? (
-        <div className="card promo-code-list">
-          <h2>Available Promo Codes</h2>
-          {activePromotions.map((promo) => (
-            <p key={promo.id}>
-              <strong>{promo.couponCode}</strong> - {promo.headline}
-            </p>
-          ))}
-        </div>
-      ) : null}
+      {/* ── Submit ───────────────────────────────────────────── */}
+      {result?.type === "error" && (
+        <p className="booking-error" role="alert">
+          {result.message}
+        </p>
+      )}
 
-      <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
-        {isSubmitting ? "Submitting..." : "Request Appointment"}
+      <button
+        type="submit"
+        className="btn btn-primary booking-submit"
+        disabled={isSubmitting || selectedCount === 0}
+      >
+        {isSubmitting ? "Submitting…" : "Request Appointment"}
       </button>
-      {result ? <p role="status">{result.message}</p> : null}
+
+      {selectedCount === 0 && (
+        <p className="muted-note" style={{ textAlign: "center" }}>
+          Select at least one service to continue.
+        </p>
+      )}
     </form>
   );
 }
