@@ -72,6 +72,10 @@ const featuredReviews = [
 ];
 
 export default function HomePage() {
+  const fullAddress = `${siteConfig.address.streetAddress}, ${siteConfig.address.addressLocality}, ${siteConfig.address.addressRegion} ${siteConfig.address.postalCode}`;
+  const mapEmbedSrc = `https://www.google.com/maps?q=${encodeURIComponent(fullAddress)}&output=embed`;
+  const mapDirectionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(fullAddress)}`;
+
   const localBusinessSchema = {
     "@context": "https://schema.org",
     "@type": "NailSalon",
@@ -184,16 +188,9 @@ export default function HomePage() {
         <h2>Visit us</h2>
         <div className="location-grid">
           <div className="location-grid__map">
-            {/*
-              Replace YOUR_PLACE_ID with your Google Maps embed Place ID.
-              Get it from: https://developers.google.com/maps/documentation/embed/get-started
-              The free Embed API doesn't require a billing key for basic use.
-            */}
             <iframe
               title="Lovely Nails location on Google Maps"
-              src={`https://www.google.com/maps/embed/v1/place?key=YOUR_MAPS_EMBED_API_KEY&q=${encodeURIComponent(
-                `${siteConfig.address.streetAddress}, ${siteConfig.address.addressLocality}, ${siteConfig.address.addressRegion}`,
-              )}`}
+              src={mapEmbedSrc}
               width="100%"
               height="100%"
               style={{ border: 0 }}
@@ -213,9 +210,7 @@ export default function HomePage() {
                 {siteConfig.address.postalCode}
               </p>
               <a
-                href={`https://maps.google.com/?q=${encodeURIComponent(
-                  `${siteConfig.address.streetAddress}, ${siteConfig.address.addressLocality}`,
-                )}`}
+                href={mapDirectionsUrl}
                 className="btn btn-secondary"
                 target="_blank"
                 rel="noopener noreferrer"
