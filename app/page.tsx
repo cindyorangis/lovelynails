@@ -7,6 +7,7 @@ import {
   localDescription,
   siteConfig,
 } from "./site-data";
+import { serviceGalleryItems } from "./gallery/gallery-data";
 import { serviceCategories } from "./services/services-data";
 
 import ReviewsCarousel from "../components/ReviewCarousel";
@@ -42,6 +43,19 @@ const featureCards = [
     cta: "Get directions",
   },
 ];
+
+const homepageGallerySources = new Set([
+  "/gallery/3.jpg",
+  "/gallery/15.jpg",
+  "/gallery/18.jpg",
+  "/gallery/20.jpg",
+  "/gallery/22.jpg",
+  "/gallery/24.jpg",
+]);
+
+const homepageGalleryItems = serviceGalleryItems.filter((item) =>
+  homepageGallerySources.has(item.src),
+);
 
 // Pull a few representative reviews — move these to site-data if you want
 // to manage them centrally or fetch from Google Places API later.
@@ -185,6 +199,28 @@ export default function HomePage() {
       </section>
 
       {/* ── Active promotions ────────────────────────────────────────── */}
+      <section className="home-gallery-section" aria-label="Featured nail work">
+        <div className="section-header-row">
+          <h2>Recent Nail Looks</h2>
+          <Link href="/gallery" className="inline-link">
+            View gallery
+          </Link>
+        </div>
+        <div className="home-gallery-grid">
+          {homepageGalleryItems.map((item, index) => (
+            <div key={item.src} className="home-gallery-tile">
+              <Image
+                src={item.src}
+                alt={item.alt}
+                fill
+                sizes="(max-width: 680px) 46vw, (max-width: 1024px) 30vw, 320px"
+                priority={index < 2}
+              />
+            </div>
+          ))}
+        </div>
+      </section>
+
       {activePromotions.length > 0 && (
         <section aria-label="Current promotions" className="promotions-section">
           <h2 style={{ textAlign: "center", marginBottom: "2rem" }}>
