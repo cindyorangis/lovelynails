@@ -6,23 +6,7 @@ export const metadata: Metadata = {
   description: localDescription("Meet our nail artists"),
 };
 
-const team = [
-  {
-    name: "Anna",
-    role: "Senior Nail Artist",
-    bio: "Specializes in structured gel manicures and detailed hand-painted designs.",
-  },
-  {
-    name: "Maya",
-    role: "Pedicure Specialist",
-    bio: "Known for relaxing spa pedicures and clean, long-lasting finishes.",
-  },
-  {
-    name: "Linh",
-    role: "Acrylic Technician",
-    bio: "Creates elegant extension sets with natural shaping and durable retention.",
-  },
-];
+const team = ["Kim", "Anna", "Helen", "Amy", "Julie", "Jacob"];
 
 export default function TeamPage() {
   return (
@@ -32,14 +16,11 @@ export default function TeamPage() {
         Friendly and experienced professionals serving North York clients every
         day.
       </p>
-      <div className="card-grid">
+      <div className="team-name-grid" aria-label="Lovely Nails team members">
         {team.map((member) => (
-          <article key={member.name} className="card">
-            <h2>{member.name}</h2>
-            <p>
-              <strong>{member.role}</strong>
-            </p>
-            <p>{member.bio}</p>
+          <article key={member} className="team-name-card">
+            <span aria-hidden="true">{member.charAt(0)}</span>
+            <h2>{member}</h2>
           </article>
         ))}
       </div>
