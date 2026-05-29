@@ -7,6 +7,7 @@ import {
   localDescription,
   siteConfig,
 } from "./site-data";
+import { serviceCategories } from "./services/services-data";
 
 import ReviewsCarousel from "../components/ReviewCarousel";
 
@@ -49,7 +50,7 @@ const featuredReviews = [
     id: "r1",
     author: "Julie Santopolo",
     rating: 5,
-    text: "I have been coming here for a couple of years now. I am very pleased with the service that nail technique provides. Always on time and done in one hour for my refill and shellac. The value for the service is great. Will keep coming back to Lucky 💅",
+    text: "I have been coming here for a couple of years now. I am very pleased with the service that nail technique provides. Always on time and done in one hour for my refill and shellac. The value for the service is great. Will keep coming back to Lovely 💅",
   },
   {
     id: "r2",
@@ -69,7 +70,54 @@ const featuredReviews = [
     rating: 5,
     text: "The owner did my nails and another staff member did my toes. I don't live around here, I just looked at the reviews from Google and decided to do my nails because my car was taking about 3 hours to get fixed. I am so happy and pleased with the service, the quality and hospitality especially from the owner. She is so nice and sweet. Thank you so much. 💕",
   },
+  {
+    id: "r5",
+    author: "Elysse Powell",
+    rating: 5,
+    text: "Amazing experience. Not only was my pedi/mani perfect, but the atmosphere was so fun & friendly! Best experience I've had in a long time. Can't wait to come back!",
+  },
+  {
+    id: "r6",
+    author: "Padmanie C",
+    rating: 5,
+    text: "The service provided here is absolutely outstanding. Julie is an absolute sweetheart! She pays attention to detail and has a great personality. Everyone is so welcoming and kind. The atmosphere is nice and cozy. The work they do is amazing as they take their time with their work! I'd definitely recommend it here! 10/10 - Paddy",
+  },
+  {
+    id: "r7",
+    author: "Kiley Pierson",
+    rating: 5,
+    text: "Lovely Nails is such a great place! The salon is always clean, relaxing, and has such a welcoming atmosphere. Kim and Helen are truly amazing. They are both so friendly, professional, and incredibly talented at what they do. They take their time, pay attention to every detail, and make sure your nails come out perfect. You can tell they really care about their clients and take pride in their work. I'm always so happy with my nails and get so many compliments. I highly recommend Lovely Nails you won't be disappointed! 💅✨",
+  },
+  {
+    id: "r8",
+    author: "Sruthy Krishnan",
+    rating: 5,
+    text: "I have become a regular here now, and every time I visit I receive amazing service. All the ladies working here are very welcoming and truly wonderful. They always take great care of me and make sure I am happy with the results. Definitely the best nail salon I have visited so far. Highly recommend!",
+  },
 ];
+
+function getServicePrice(categoryTitle: string, serviceName: string) {
+  return serviceCategories
+    .find((category) => category.title === categoryTitle)
+    ?.items.find((item) => item.name === serviceName)?.price;
+}
+
+const priceAnchors = [
+  {
+    label: "Manicures",
+    price: getServicePrice("Manicure", "Basic Manicure"),
+  },
+  {
+    label: "Pedicures",
+    price: getServicePrice("Pedicure", "Pedicure Regular"),
+  },
+  {
+    label: "Nail art",
+    price: getServicePrice("Artificial Nail", "Nail Art"),
+  },
+].filter((item): item is { label: string; price: string } =>
+  Boolean(item.price),
+);
 
 export default function HomePage() {
   const fullAddress = `${siteConfig.address.streetAddress}, ${siteConfig.address.addressLocality}, ${siteConfig.address.addressRegion} ${siteConfig.address.postalCode}`;
@@ -175,6 +223,20 @@ export default function HomePage() {
               </Link>
             </article>
           ))}
+        </div>
+        <div className="price-anchor-bar" aria-label="Starting prices">
+          <p className="price-anchor-bar__intro">Starting prices</p>
+          <div className="price-anchor-list">
+            {priceAnchors.map((item) => (
+              <p key={item.label} className="price-anchor">
+                <span>{item.label}</span>
+                <strong>from {item.price}</strong>
+              </p>
+            ))}
+          </div>
+          <Link href="/services" className="inline-link">
+            Full price list
+          </Link>
         </div>
       </section>
 
