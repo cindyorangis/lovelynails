@@ -10,6 +10,7 @@ export type GalleryEditableItem = {
   title: string;
   description: string;
   category: GalleryCategory;
+  isSalonPhoto?: boolean;
 };
 
 // You can edit title/description/category freely.
@@ -186,7 +187,8 @@ export const galleryEditableItems: GalleryEditableItem[] = [
     title: "Salon Pedicure Area",
     description:
       "Interior photo showing pedicure stations and a clean modern salon setup.",
-    category: "Pedicure",
+    category: "Salon",
+    isSalonPhoto: true,
   },
   {
     file: "26.jpg",
@@ -194,6 +196,7 @@ export const galleryEditableItems: GalleryEditableItem[] = [
     description:
       "Front exterior view of Lovely Nails on Islington Ave in North York.",
     category: "Salon",
+    isSalonPhoto: true,
   },
 ];
 
@@ -203,6 +206,7 @@ export type GalleryItem = {
   title: string;
   description: string;
   category: GalleryCategory;
+  isSalonPhoto: boolean;
 };
 
 export const galleryItems: GalleryItem[] = galleryEditableItems.map((item) => {
@@ -212,9 +216,18 @@ export const galleryItems: GalleryItem[] = galleryEditableItems.map((item) => {
     description: item.description.trim(),
     category: item.category,
     alt: `Lovely Nails ${item.title.toLowerCase()} in North York`,
+    isSalonPhoto: item.isSalonPhoto ?? false,
   };
 });
 
+export const serviceGalleryItems = galleryItems.filter(
+  (item) => !item.isSalonPhoto,
+);
+
+export const shopGalleryItems = galleryItems.filter(
+  (item) => item.isSalonPhoto,
+);
+
 export const galleryCategories = Array.from(
-  new Set(galleryItems.map((item) => item.category)),
+  new Set(serviceGalleryItems.map((item) => item.category)),
 );
