@@ -179,7 +179,7 @@ export default function BookingForm({
         <div className="booking-success__icon" aria-hidden="true">
           ✓
         </div>
-        <h2>You're booked in!</h2>
+        <h2>You&apos;re booked in!</h2>
         <p>{result.message}</p>
         <button className="btn btn-secondary" onClick={() => setResult(null)}>
           Make another booking
@@ -304,7 +304,7 @@ export default function BookingForm({
           )}
         </legend>
         <p className="muted-note" style={{ marginBottom: "1rem" }}>
-          Select everything you'd like for this visit.
+          Select everything you&apos;d like for this visit.
         </p>
 
         <div className="booking-categories">

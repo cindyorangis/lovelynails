@@ -9,7 +9,7 @@ type Review = {
 
 export default function ReviewsCarousel({ reviews }: { reviews: Review[] }) {
   const maxVisible = 3;
-  const totalSlides = Math.ceil(reviews.length / maxVisible);
+  const visibleReviews = reviews.slice(0, maxVisible);
 
   return (
     <section aria-label="Client reviews">
@@ -28,9 +28,9 @@ export default function ReviewsCarousel({ reviews }: { reviews: Review[] }) {
       </div>
       <div
         className="card-grid reviews-carousel"
-        aria-label={`${reviews.length} client reviews`}
+        aria-label={`${visibleReviews.length} featured client reviews`}
       >
-        {reviews.map((review: Review) => (
+        {visibleReviews.map((review: Review) => (
           <blockquote key={review.id} className="card card--review">
             <div
               className="review__stars"
@@ -38,7 +38,7 @@ export default function ReviewsCarousel({ reviews }: { reviews: Review[] }) {
             >
               {"★".repeat(review.rating)}
             </div>
-            <p className="review__text">"{review.text}"</p>
+            <p className="review__text">{review.text}</p>
             <footer className="review__author">— {review.author}</footer>
           </blockquote>
         ))}
