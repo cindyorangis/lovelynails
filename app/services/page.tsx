@@ -11,13 +11,14 @@ export const metadata: Metadata = {
 
 export default function ServicesPage() {
   return (
-    <div className="container page-stack">
-      <h1>Services</h1>
-      <p>
-        Browse our full service menu for Lovely Nails in North York. Select one
-        or more services, then continue to booking.
-      </p>
-      <ServicesSelector />
+    <div className="services-page-shell">
+      <div className="container services-page-layout">
+        <header className="services-page-header">
+          <h1>Services</h1>
+          <p>Select one or more services, then continue to booking.</p>
+        </header>
+        <ServicesSelector />
+      </div>
     </div>
   );
 }

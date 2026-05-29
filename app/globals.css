@@ -448,6 +448,229 @@ h2 {
   display: grid;
   gap: 0.4rem;
 }
+
+.services-page-shell {
+  margin-top: -1.4rem;
+  background: #000;
+  color: #f4f1ea;
+  min-height: 100vh;
+}
+
+.services-page-layout {
+  width: min(1440px, 100%);
+  padding: 3rem 0 0;
+}
+
+.services-page-header {
+  display: grid;
+  gap: 1rem;
+  padding: 0 0 1.5rem;
+}
+
+.services-page-header h1 {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.services-page-header p {
+  margin: 0;
+  color: #bdb9b0;
+  font-size: clamp(1.25rem, 2.5vw, 2rem);
+  font-weight: 700;
+}
+
+.services-menu {
+  display: grid;
+  gap: 2.8rem;
+  padding-bottom: 8.5rem;
+}
+
+.services-tabs {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  padding-bottom: 1.4rem;
+  border-bottom: 2px solid #d8d3c9;
+}
+
+.services-tab {
+  min-height: 72px;
+  padding: 0 2.15rem;
+  border: 3px solid #d8d3c9;
+  border-radius: 0.9rem;
+  background: #000;
+  color: #f4f1ea;
+  font: inherit;
+  font-size: clamp(1.15rem, 2vw, 1.65rem);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.services-tab:hover,
+.services-tab--active {
+  background: #f4f1ea;
+  color: #000;
+}
+
+.services-menu-body {
+  display: grid;
+  gap: 2.4rem;
+}
+
+.services-menu-group {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.services-menu-group h2 {
+  margin: 0;
+  color: #9d9990;
+  font-family: var(--font-body);
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.services-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.services-menu-card {
+  min-height: 132px;
+  padding: 1.75rem;
+  border: 2px solid #464641;
+  border-radius: 0.85rem;
+  background: #2d2f2c;
+  color: #f4f1ea;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.services-menu-card:hover,
+.services-menu-card--selected {
+  border-color: #d9c77a;
+  background: #39382f;
+}
+
+.services-menu-card__content {
+  display: grid;
+  gap: 0.65rem;
+  min-width: 0;
+}
+
+.services-popular {
+  width: fit-content;
+  padding: 0.3rem 0.7rem;
+  border-radius: 0.45rem;
+  background: #58470a;
+  color: #dfbe3c;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.services-menu-card__name {
+  font-size: clamp(1.35rem, 2vw, 1.8rem);
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.services-menu-card__price {
+  font-size: clamp(1.25rem, 1.8vw, 1.6rem);
+  line-height: 1.2;
+}
+
+.services-menu-card__duration {
+  color: #aaa69e;
+  font-size: clamp(1.15rem, 1.7vw, 1.5rem);
+  line-height: 1.05;
+  text-align: right;
+  white-space: pre-line;
+}
+
+.services-booking-bar {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  margin-inline: calc((100% - 100vw) / 2);
+  padding: 1.5rem max(1.5rem, calc((100vw - 1440px) / 2));
+  border-top: 2px solid #464641;
+  background: #30312f;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.services-booking-bar p {
+  margin: 0;
+  color: #c9c5bc;
+  font-size: clamp(1.2rem, 2vw, 1.65rem);
+}
+
+.services-booking-bar strong {
+  color: #f4f1ea;
+}
+
+.services-booking-button {
+  min-width: min(315px, 50vw);
+  padding: 1rem 1.35rem;
+  border: 2px solid #555550;
+  border-radius: 0.9rem;
+  color: #f4f1ea;
+  text-align: center;
+  font-size: clamp(1.1rem, 2vw, 1.55rem);
+  font-weight: 800;
+}
+
+.services-booking-button--disabled {
+  color: #918f89;
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .services-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .services-menu-card {
+    min-height: 120px;
+    padding: 1.25rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .services-page-layout {
+    padding-top: 2rem;
+  }
+  .services-tabs {
+    gap: 0.5rem;
+  }
+  .services-tab {
+    min-height: 54px;
+    padding: 0 1rem;
+    border-width: 2px;
+  }
+  .services-card-grid {
+    grid-template-columns: 1fr;
+  }
+  .services-booking-bar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .services-booking-button {
+    width: 100%;
+    min-width: 0;
+  }
+}
 @media (max-width: 640px) {
   .nav-wrap {
     align-items: start;
