@@ -1,41 +1,33 @@
-import type { Metadata } from "next";
+import { getAllPosts, getPostBySlug } from "@/lib/blog";
 import { notFound } from "next/navigation";
-import { blogPosts, buildTitle } from "../../site-data";
 
-export function generateStaticParams() {
-  return blogPosts.map((post) => ({ slug: post.slug }));
+type Props = {
+  params: Promise<{ slug: string }>;
+};
+
+export async function generateStaticParams() {
+  const posts = getAllPosts();
+  return posts.map((post) => ({ slug: post.slug }));
 }
 
-export async function generateMetadata(
-  props: PageProps<"/blog/[slug]">,
-): Promise<Metadata> {
-  const { slug } = await props.params;
-  const post = blogPosts.find((item) => item.slug === slug);
+export default async function PostPage({ params }: Props) {
+  const { slug } = await params;
+  let post;
 
-  if (!post) {
-    return { title: buildTitle("Blog Post") };
+  try {
+    post = await getPostBySlug(slug);
+  } catch {
+    notFound();
   }
 
-  return {
-    title: buildTitle(post.title),
-    description: post.excerpt,
-    alternates: {
-      canonical: `/blog/${post.slug}`,
-    },
-  };
-}
-
-export default async function BlogPostPage(props: PageProps<"/blog/[slug]">) {
-  const { slug } = await props.params;
-  const post = blogPosts.find((item) => item.slug === slug);
-
-  if (!post) notFound();
-
   return (
-    <article className="container page-stack">
-      <p className="eyebrow">{post.publishedAt}</p>
-      <h1>{post.title}</h1>
-      <p>{post.content}</p>
-    </article>
+    <main className="max-w-2xl mx-auto px-4 py-12">
+      <h1 className="text-3xl font-semibold mb-2">{post.title}</h1>
+      {post.date && <p className="text-sm text-gray-500 mb-8">{post.date}</p>}
+      <article
+        className="prose prose-neutral"
+        dangerouslySetInnerHTML={{ __html: post.contentHtml }}
+      />
+    </main>
   );
 }
