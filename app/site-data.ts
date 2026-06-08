@@ -25,15 +25,20 @@ export const siteConfig = {
   ],
 };
 
-export const mainNav = [
+export const primaryNav = [
   { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
-  { href: "/booking", label: "Booking" },
-  { href: "/contact-location", label: "Contact & Location" },
   { href: "/gallery", label: "Gallery" },
+  { href: "/contact-location", label: "Contact & Location" },
+  { href: "/booking", label: "Book Now", isCta: true },
+];
+
+export const secondaryNav = [
   { href: "/meet-the-team", label: "Meet the Team" },
   { href: "/blog", label: "Blog" },
 ];
+
+export const mainNav = [...primaryNav, ...secondaryNav];
 
 export type Promotion = {
   id: string;

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import "./globals.css";
-import { mainNav, siteConfig } from "./site-data";
+import { primaryNav, secondaryNav, siteConfig } from "./site-data";
 
 // Get the current day of the week
 function getTodayDay(): string {
@@ -55,8 +55,12 @@ export default function RootLayout({
               Lovely Nails
             </Link>
             <nav aria-label="Main navigation" className="main-nav">
-              {mainNav.map((item) => (
-                <Link key={item.href} href={item.href}>
+              {primaryNav.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={item.isCta ? "nav-cta" : undefined}
+                >
                   {item.label}
                 </Link>
               ))}
@@ -96,6 +100,16 @@ export default function RootLayout({
               <h2>Contact</h2>
               <p>{siteConfig.phone}</p>
               <p>{siteConfig.email}</p>
+            </div>
+            <div>
+              <h2>More</h2>
+              <ul className="footer-links">
+                {secondaryNav.map((item) => (
+                  <li key={item.href}>
+                    <Link href={item.href}>{item.label}</Link>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </footer>

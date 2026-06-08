@@ -50,6 +50,7 @@ a {
 .site-header {
   position: sticky;
   top: 0;
+  z-index: 20;
   backdrop-filter: blur(8px);
   background: color-mix(in srgb, #fff 86%, transparent);
   border-bottom: 1px solid var(--border);
@@ -72,14 +73,33 @@ a {
 
 .main-nav {
   display: flex;
-  gap: 1rem;
+  align-items: center;
+  gap: 0.85rem;
   flex-wrap: wrap;
   font-size: 0.95rem;
   color: var(--muted);
 }
 
+.main-nav a {
+  line-height: 1;
+}
+
 .main-nav a:hover {
   color: var(--primary-deep);
+}
+
+.main-nav .nav-cta {
+  padding: 0.62rem 0.9rem;
+  border-radius: 0.55rem;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 8px 18px color-mix(in srgb, var(--primary) 24%, transparent);
+}
+
+.main-nav .nav-cta:hover {
+  background: var(--primary-deep);
+  color: #fff;
 }
 
 /* ─────────────────────────────────────────
@@ -1051,6 +1071,26 @@ h2,
   font-size: 1.1rem;
 }
 
+.footer-links {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer-links a {
+  color: var(--muted);
+  font-size: 0.95rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+.footer-links a:hover {
+  color: var(--primary-deep);
+}
+
 .hour-today {
   font-weight: 700;
 }
@@ -1096,6 +1136,15 @@ h2,
   .nav-wrap {
     align-items: start;
     flex-direction: column;
+  }
+
+  .main-nav {
+    width: 100%;
+    gap: 0.75rem;
+  }
+
+  .main-nav .nav-cta {
+    margin-left: auto;
   }
 
   .promo-compact {
