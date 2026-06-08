@@ -12,6 +12,8 @@ import { serviceCategories } from "./services/services-data";
 
 import ReviewsCarousel from "../components/ReviewCarousel";
 
+type FeatureIconName = "sparkle" | "shield" | "map-pin";
+
 export const metadata: Metadata = {
   title: buildTitle("Nail Salon in North York, Ontario"),
   description: localDescription("Professional nail salon services"),
@@ -20,7 +22,7 @@ export const metadata: Metadata = {
 const featureCards = [
   {
     id: "services",
-    icon: "✦",
+    iconName: "sparkle" satisfies FeatureIconName,
     title: "Full Service Menu",
     body: "Gel, shellac, acrylic, dip powder, spa pedicures, waxing, facials, and bridal packages — all under one roof.",
     href: "/services",
@@ -28,7 +30,7 @@ const featureCards = [
   },
   {
     id: "hygiene",
-    icon: "◈",
+    iconName: "shield" satisfies FeatureIconName,
     title: "Clean-First Standards",
     body: "Single-use files and buffers, autoclaved metal tools, fresh basin liners every client. We don't cut corners on hygiene.",
     href: "/booking",
@@ -36,13 +38,41 @@ const featureCards = [
   },
   {
     id: "location",
-    icon: "◉",
+    iconName: "map-pin" satisfies FeatureIconName,
     title: "Easy to Get To",
     body: "Located on Islington Ave in North York. Street parking available and a short walk from the 37 Islington bus.",
     href: "/contact-location",
     cta: "Get directions",
   },
-];
+] as const;
+
+function FeatureIcon({ name }: { name: FeatureIconName }) {
+  if (name === "sparkle") {
+    return (
+      <svg viewBox="0 0 24 24" focusable="false">
+        <path d="M12 2.75 13.72 8.8 19.25 12 13.72 15.2 12 21.25 10.28 15.2 4.75 12 10.28 8.8 12 2.75Z" />
+        <path d="M5.25 3.75 5.9 6.1 8.25 6.75 5.9 7.4 5.25 9.75 4.6 7.4 2.25 6.75 4.6 6.1 5.25 3.75Z" />
+        <path d="M19 4.75 19.45 6.3 21 6.75 19.45 7.2 19 8.75 18.55 7.2 17 6.75 18.55 6.3 19 4.75Z" />
+      </svg>
+    );
+  }
+
+  if (name === "shield") {
+    return (
+      <svg viewBox="0 0 24 24" focusable="false">
+        <path d="M12 2.75 19 5.6V11.1C19 15.55 16.22 19.65 12 21.25 7.78 19.65 5 15.55 5 11.1V5.6L12 2.75Z" />
+        <path d="M8.75 11.6 10.85 13.7 15.55 8.95" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 24 24" focusable="false">
+      <path d="M12 21.25S5.75 15.15 5.75 9.65A6.25 6.25 0 0 1 12 3.75a6.25 6.25 0 0 1 6.25 5.9C18.25 15.15 12 21.25 12 21.25Z" />
+      <path d="M12 12.15a2.35 2.35 0 1 0 0-4.7 2.35 2.35 0 0 0 0 4.7Z" />
+    </svg>
+  );
+}
 
 const homepageGallerySources = new Set([
   "/gallery/3.jpg",
@@ -250,7 +280,7 @@ export default function HomePage() {
           {featureCards.map((f) => (
             <article key={f.id} className="card card--feature">
               <span className="card__icon" aria-hidden="true">
-                {f.icon}
+                <FeatureIcon name={f.iconName} />
               </span>
               <h2>{f.title}</h2>
               <p>{f.body}</p>
