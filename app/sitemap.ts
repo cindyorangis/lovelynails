@@ -1,7 +1,10 @@
 import type { MetadataRoute } from "next";
-import { blogPosts, mainNav, siteConfig } from "./site-data";
+import { mainNav, siteConfig } from "./site-data";
+import { getAllPosts } from "@/lib/blog";
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const posts = getAllPosts();
+
   const staticRoutes = mainNav.map((route) => ({
     url: `${siteConfig.baseUrl}${route.href}`,
     lastModified: new Date(),
@@ -9,9 +12,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: route.href === "/" ? 1 : 0.8,
   }));
 
-  const blogRoutes = blogPosts.map((post) => ({
+  const blogRoutes = posts.map((post) => ({
     url: `${siteConfig.baseUrl}/blog/${post.slug}`,
-    lastModified: new Date(post.publishedAt),
+    lastModified: new Date(post.date),
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }));
