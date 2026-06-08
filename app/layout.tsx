@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import "./globals.css";
+import { cn, container } from "../lib/styles";
 import { primaryNav, secondaryNav, siteConfig } from "./site-data";
 
 // Get the current day of the week
@@ -50,7 +51,7 @@ export default function RootLayout({
     <html lang="en-CA">
       <body>
         <header className="site-header">
-          <div className="container nav-wrap">
+          <div className={cn(container, "nav-wrap")}>
             <Link href="/" className="brand">
               Lovely Nails
             </Link>
@@ -69,7 +70,7 @@ export default function RootLayout({
         </header>
         <main>{children}</main>
         <footer className="site-footer">
-          <div className="container footer-grid">
+          <div className={cn(container, "footer-grid")}>
             <div>
               <h2>Business Hours</h2>
               <ul>

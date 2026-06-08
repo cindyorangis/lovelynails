@@ -6,6 +6,13 @@ import {
   serviceGalleryItems,
   shopGalleryItems,
 } from "./gallery-data";
+import {
+  buttonSecondary,
+  card,
+  cn,
+  container,
+  pageStack,
+} from "../../lib/styles";
 
 export const metadata: Metadata = {
   title: buildTitle("Nail Art Gallery"),
@@ -14,7 +21,7 @@ export const metadata: Metadata = {
 
 export default function GalleryPage() {
   return (
-    <div className="container page-stack">
+    <div className={cn(container, pageStack)}>
       <h1>Gallery</h1>
       <p>
         Real styles and finishes from our recent work in North York. Browse
@@ -84,14 +91,14 @@ export default function GalleryPage() {
         </section>
       )}
 
-      <section className="card insta-card">
+      <section className={cn(card, "insta-card")}>
         <h2>More Looks On Instagram</h2>
         <p>
           See our newest sets, seasonal trends, and daily client
           transformations.
         </p>
         <a
-          className="btn btn-secondary"
+          className={buttonSecondary}
           href="https://www.instagram.com/"
           target="_blank"
           rel="noreferrer"

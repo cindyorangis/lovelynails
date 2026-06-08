@@ -1,5 +1,7 @@
 // ── Social proof / reviews ───────────────────────────────────── */
 // Simple carousel to show up to 3 reviews at a time
+import { card, cardGrid, cn, inlineLink, mutedNote } from "../lib/styles";
+
 type Review = {
   id: number | string;
   rating: number;
@@ -18,7 +20,7 @@ export default function ReviewsCarousel({ reviews }: { reviews: Review[] }) {
         {reviews.length > maxVisible && (
           <a
             href="https://maps.app.goo.gl/HncsyCXjaVvt3dCq8"
-            className="inline-link"
+            className={inlineLink}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -27,11 +29,11 @@ export default function ReviewsCarousel({ reviews }: { reviews: Review[] }) {
         )}
       </div>
       <div
-        className="card-grid reviews-carousel"
+        className={cn(cardGrid, "reviews-carousel")}
         aria-label={`${visibleReviews.length} featured client reviews`}
       >
         {visibleReviews.map((review: Review) => (
-          <blockquote key={review.id} className="card card--review">
+          <blockquote key={review.id} className={cn(card, "card--review")}>
             <div
               className="review__stars"
               aria-label={`${review.rating} out of 5 stars`}
@@ -48,11 +50,11 @@ export default function ReviewsCarousel({ reviews }: { reviews: Review[] }) {
           className="reviews-pagination"
           style={{ textAlign: "center", marginTop: "1.5rem" }}
         >
-          <span className="muted-note">
+          <span className={mutedNote}>
             Showing up to {maxVisible} of {reviews.length} reviews. View more on{" "}
             <a
               href="https://maps.app.goo.gl/HncsyCXjaVvt3dCq8"
-              className="inline-link"
+              className={inlineLink}
               target="_blank"
               rel="noopener noreferrer"
             >

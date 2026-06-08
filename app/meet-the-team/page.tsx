@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { buildTitle, localDescription } from "../site-data";
+import { cn, container, pageStack } from "../../lib/styles";
 
 export const metadata: Metadata = {
   title: buildTitle("Meet the Team"),
@@ -10,7 +11,7 @@ const team = ["Kim", "Anna", "Helen", "Amy", "Julie", "Jacob"];
 
 export default function TeamPage() {
   return (
-    <div className="container page-stack">
+    <div className={cn(container, pageStack)}>
       <h1>Meet the Team</h1>
       <p>
         Friendly and experienced professionals serving North York clients every

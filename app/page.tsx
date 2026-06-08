@@ -9,6 +9,18 @@ import {
 } from "./site-data";
 import { serviceGalleryItems } from "./gallery/gallery-data";
 import { serviceCategories } from "./services/services-data";
+import {
+  buttonPrimary,
+  buttonSecondary,
+  card,
+  cardGrid,
+  cn,
+  container,
+  ctaRow,
+  inlineLink,
+  mutedNote,
+  pageStack,
+} from "../lib/styles";
 
 import ReviewsCarousel from "../components/ReviewCarousel";
 
@@ -190,7 +202,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="container page-stack">
+    <div className={cn(container, pageStack)}>
       {/* ── Hero ────────────────────────────────────────────────────── */}
       <section className="hero hero--with-image">
         <div className="hero__text">
@@ -200,11 +212,11 @@ export default function HomePage() {
             Expert manicures, pedicures, and custom nail art — with a
             clean&#8209;first approach and results that actually last.
           </p>
-          <div className="cta-row">
-            <Link href="/booking" className="btn btn-primary">
+          <div className={ctaRow}>
+            <Link href="/booking" className={buttonPrimary}>
               Book Appointment
             </Link>
-            <Link href="/services" className="btn btn-secondary">
+            <Link href="/services" className={buttonSecondary}>
               View Services
             </Link>
           </div>
@@ -232,7 +244,7 @@ export default function HomePage() {
       <section className="home-gallery-section" aria-label="Featured nail work">
         <div className="section-header-row">
           <h2>Recent Nail Looks</h2>
-          <Link href="/gallery" className="inline-link">
+          <Link href="/gallery" className={inlineLink}>
             View gallery
           </Link>
         </div>
@@ -258,14 +270,17 @@ export default function HomePage() {
           </h2>
           <div className="promo-grid" data-count={activePromotions.length}>
             {activePromotions.map((promo) => (
-              <article key={promo.id} className="card promo-card">
+              <article key={promo.id} className={cn(card, "promo-card")}>
                 <p className="eyebrow">{promo.label}</p>
                 <h3>{promo.headline}</h3>
                 <p>{promo.details}</p>
-                <p className="muted-note">
+                <p className={mutedNote}>
                   Code: <strong>{promo.couponCode}</strong>
                 </p>
-                <Link href={promo.ctaHref} className="btn btn-primary">
+                <Link
+                  href={promo.ctaHref}
+                  className={cn(buttonPrimary, "mt-auto")}
+                >
                   {promo.ctaLabel}
                 </Link>
               </article>
@@ -276,15 +291,15 @@ export default function HomePage() {
 
       {/* ── Feature cards ────────────────────────────────────────────── */}
       <section aria-label="Why Lovely Nails">
-        <div className="card-grid">
+        <div className={cardGrid}>
           {featureCards.map((f) => (
-            <article key={f.id} className="card card--feature">
+            <article key={f.id} className={cn(card, "card--feature")}>
               <span className="card__icon" aria-hidden="true">
                 <FeatureIcon name={f.iconName} />
               </span>
               <h2>{f.title}</h2>
               <p>{f.body}</p>
-              <Link href={f.href} className="inline-link">
+              <Link href={f.href} className={inlineLink}>
                 {f.cta} →
               </Link>
             </article>
@@ -300,7 +315,7 @@ export default function HomePage() {
               </p>
             ))}
           </div>
-          <Link href="/services" className="inline-link">
+          <Link href="/services" className={inlineLink}>
             Full price list
           </Link>
         </div>
@@ -339,7 +354,7 @@ export default function HomePage() {
               </p>
               <a
                 href={mapDirectionsUrl}
-                className="btn btn-secondary"
+                className={buttonSecondary}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -348,13 +363,13 @@ export default function HomePage() {
             </div>
             <div className="location-detail">
               <h3>Phone</h3>
-              <a href={`tel:${siteConfig.phone}`} className="inline-link">
+              <a href={`tel:${siteConfig.phone}`} className={inlineLink}>
                 {siteConfig.phone}
               </a>
             </div>
             <div className="location-detail">
               <h3>Email</h3>
-              <a href={`mailto:${siteConfig.email}`} className="inline-link">
+              <a href={`mailto:${siteConfig.email}`} className={inlineLink}>
                 {siteConfig.email}
               </a>
             </div>

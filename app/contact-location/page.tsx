@@ -1,6 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { buildTitle, localDescription, siteConfig } from "../site-data";
+import {
+  buttonPrimary,
+  buttonSecondary,
+  card,
+  cardGrid,
+  cn,
+  container,
+  ctaRow,
+  pageStack,
+} from "../../lib/styles";
 
 export const metadata: Metadata = {
   title: buildTitle("Contact & Location"),
@@ -31,30 +41,30 @@ export default function ContactLocationPage() {
   };
 
   return (
-    <div className="container page-stack">
+    <div className={cn(container, pageStack)}>
       <h1>Contact & Location</h1>
       <p>
         Find Lovely Nails in North York, Ontario and reach us quickly for
         appointments.
       </p>
-      <div className="cta-row">
-        <a href={`tel:${siteConfig.phone}`} className="btn btn-primary">
+      <div className={ctaRow}>
+        <a href={`tel:${siteConfig.phone}`} className={buttonPrimary}>
           Call Now
         </a>
-        <Link href="/booking" className="btn btn-secondary">
+        <Link href="/booking" className={buttonSecondary}>
           Book Online
         </Link>
         <a
           href={mapDirectionsUrl}
           target="_blank"
           rel="noreferrer"
-          className="btn btn-secondary"
+          className={buttonSecondary}
         >
           Get Directions
         </a>
       </div>
-      <div className="card-grid">
-        <article className="card">
+      <div className={cardGrid}>
+        <article className={card}>
           <h2>Address</h2>
           <p>{siteConfig.address.streetAddress}</p>
           <p>
@@ -62,7 +72,7 @@ export default function ContactLocationPage() {
             {siteConfig.address.addressRegion} {siteConfig.address.postalCode}
           </p>
         </article>
-        <article className="card">
+        <article className={card}>
           <h2>Phone</h2>
           <p>
             <a href={`tel:${siteConfig.phone}`}>{siteConfig.phone}</a>
@@ -72,7 +82,7 @@ export default function ContactLocationPage() {
             <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
           </p>
         </article>
-        <article className="card">
+        <article className={card}>
           <h2>Getting Here</h2>
           <p>
             We are in North York with street-front access. TTC and nearby
@@ -84,7 +94,7 @@ export default function ContactLocationPage() {
           </p>
         </article>
       </div>
-      <section className="card">
+      <section className={card}>
         <h2>Business Hours</h2>
         <ul>
           {siteConfig.hours.map((hour) => (
@@ -92,7 +102,7 @@ export default function ContactLocationPage() {
           ))}
         </ul>
       </section>
-      <section className="card map-card">
+      <section className={cn(card, "map-card")}>
         <h2>Map</h2>
         <div className="map-frame-wrap">
           <iframe
