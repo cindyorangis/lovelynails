@@ -1115,6 +1115,16 @@ h2,
   font-weight: 700;
 }
 
+.footer-bottom {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #888;
+}
+
 /* ─────────────────────────────────────────
    Responsive
 ───────────────────────────────────────── */

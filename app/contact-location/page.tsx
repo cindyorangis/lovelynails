@@ -27,7 +27,6 @@ export default function ContactLocationPage() {
     "@type": "NailSalon",
     name: siteConfig.name,
     telephone: siteConfig.phone,
-    email: siteConfig.email,
     address: {
       "@type": "PostalAddress",
       ...siteConfig.address,
@@ -76,10 +75,6 @@ export default function ContactLocationPage() {
           <h2>Phone</h2>
           <p>
             <a href={`tel:${siteConfig.phone}`}>{siteConfig.phone}</a>
-          </p>
-          <h2>Email</h2>
-          <p>
-            <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
           </p>
         </article>
         <article className={card}>

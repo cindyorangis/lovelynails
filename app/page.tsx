@@ -186,7 +186,6 @@ export default function HomePage() {
     name: siteConfig.name,
     image: `${siteConfig.baseUrl}/opengraph-image.png`,
     telephone: siteConfig.phone,
-    email: siteConfig.email,
     address: {
       "@type": "PostalAddress",
       ...siteConfig.address,
@@ -365,12 +364,6 @@ export default function HomePage() {
               <h3>Phone</h3>
               <a href={`tel:${siteConfig.phone}`} className={inlineLink}>
                 {siteConfig.phone}
-              </a>
-            </div>
-            <div className="location-detail">
-              <h3>Email</h3>
-              <a href={`mailto:${siteConfig.email}`} className={inlineLink}>
-                {siteConfig.email}
               </a>
             </div>
             <div className="location-detail">

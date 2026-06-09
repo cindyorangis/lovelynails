@@ -42,19 +42,19 @@ export default function Footer() {
         </div>
         <div>
           <h2>Visit Us</h2>
-          <p>
+          <a
+            href={siteConfig.address.streetAddress}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             {siteConfig.address.streetAddress},{" "}
             {siteConfig.address.addressLocality},{" "}
             {siteConfig.address.addressRegion} {siteConfig.address.postalCode}
-          </p>
+          </a>
+          <a href={`tel:${siteConfig.phone}`}>{siteConfig.phone}</a>
         </div>
         <div>
-          <h2>Contact</h2>
-          <p>{siteConfig.phone}</p>
-          <p>{siteConfig.email}</p>
-        </div>
-        <div>
-          <h2>More</h2>
+          <h2>Quick Links</h2>
           <ul className="footer-links">
             {secondaryNav.map((item) => (
               <li key={item.href}>
@@ -63,6 +63,9 @@ export default function Footer() {
             ))}
           </ul>
         </div>
+      </div>
+      <div className={cn(container, "footer-bottom")}>
+        <p>© {new Date().getFullYear()} Lovely Nails. All rights reserved.</p>
       </div>
     </footer>
   );
