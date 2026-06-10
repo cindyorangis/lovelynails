@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import "./globals.css";
-import { cn, container } from "../lib/styles";
-import { primaryNav, siteConfig } from "./site-data";
 
+import "./globals.css";
+import { siteConfig } from "./site-data";
+
+import Header from "../components/Header";
 import Footer from "../components/Footer";
 
 export const metadata: Metadata = {
@@ -36,24 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en-CA">
       <body>
-        <header className="site-header">
-          <div className={cn(container, "nav-wrap")}>
-            <Link href="/" className="brand">
-              Lovely Nails
-            </Link>
-            <nav aria-label="Main navigation" className="main-nav">
-              {primaryNav.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={item.isCta ? "nav-cta" : undefined}
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
-          </div>
-        </header>
+        <Header />
         <main>{children}</main>
         <Footer />
       </body>
