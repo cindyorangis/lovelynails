@@ -5,6 +5,7 @@ import { siteConfig } from "./site-data";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import BookingBar from "../components/BookingBar";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.baseUrl),
@@ -39,6 +40,7 @@ export default function RootLayout({
         <Header />
         <main>{children}</main>
         <Footer />
+        <BookingBar />
       </body>
     </html>
   );

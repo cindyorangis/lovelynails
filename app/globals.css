@@ -619,6 +619,116 @@ h2,
 }
 
 /* ─────────────────────────────────────────
+   Sticky booking bar
+───────────────────────────────────────── */
+
+.booking-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 19;
+  /* Slide up from below and fade in */
+  transform: translateY(100%);
+  opacity: 0;
+  transition:
+    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.25s ease;
+  pointer-events: none;
+}
+
+.booking-bar[data-visible="true"] {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.booking-bar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1.25rem;
+  background: color-mix(in srgb, #fff 92%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid var(--border);
+  box-shadow: 0 -4px 24px color-mix(in srgb, var(--ink) 6%, transparent);
+  width: min(1100px, 92vw);
+  margin: 0 auto;
+  border-radius: 0.9rem 0.9rem 0 0;
+}
+
+.booking-bar__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.booking-bar__name {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.booking-bar__tagline {
+  font-size: 0.78rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.booking-bar__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-shrink: 0;
+}
+
+.booking-bar__phone {
+  font-size: 0.875rem;
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+
+.booking-bar__phone:hover {
+  color: var(--ink);
+}
+
+.booking-bar__cta {
+  display: inline-block;
+  padding: 0.6rem 1.1rem;
+  border-radius: 0.55rem;
+  background: var(--primary);
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: background 0.15s;
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--primary) 28%, transparent);
+}
+
+.booking-bar__cta:hover {
+  background: var(--primary-deep);
+  color: #fff;
+}
+
+/* Hide phone number on very small screens to keep the bar compact */
+@media (max-width: 420px) {
+  .booking-bar__phone {
+    display: none;
+  }
+
+  .booking-bar__tagline {
+    display: none;
+  }
+}
+
+/* ─────────────────────────────────────────
    Booking form
 ───────────────────────────────────────── */
 
