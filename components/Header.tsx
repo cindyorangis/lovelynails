@@ -8,6 +8,11 @@ export default function Header() {
   return (
     <header className="site-header">
       <div className={cn(container, "nav-wrap")}>
+        {/*
+          The brand wordmark uses Playfair Display italic at 700 weight.
+          font-style: italic is intentional — it gives the wordmark a
+          calligraphic, boutique feel that plain upright serif doesn't.
+        */}
         <Link href="/" className="brand">
           Lovely Nails
         </Link>

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Playfair_Display } from "next/font/google";
 
 import "./globals.css";
 import { siteConfig } from "./site-data";
@@ -6,6 +7,19 @@ import { siteConfig } from "./site-data";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import BookingBar from "../components/BookingBar";
+
+// next/font/google self-hosts the font at build time — no external
+// request at runtime, no layout shift, automatic font-display:swap.
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  // 400 for body-serif moments (blockquotes, promos)
+  // 600 for h2/h3 headings
+  // 700 for h1 and the brand wordmark
+  weight: ["400", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-playfair", // exposed as a CSS custom property
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.baseUrl),
@@ -35,7 +49,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en-CA">
+    // playfair.variable adds --font-playfair to the <html> element so
+    // any CSS on the page can reference it via var(--font-playfair).
+    <html lang="en-CA" className={playfair.variable}>
       <body>
         <Header />
         <main>{children}</main>
